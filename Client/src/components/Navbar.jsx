@@ -6,7 +6,7 @@ function Navbar({page}) {
     
     <>
     {/* Container */}
-        <div className='flex w-[full] h-[50px] justify-center shadow-md sticky top-0 bg-white'>
+        <div className='flex w-[full]  z-50 h-[50px] justify-center shadow-md sticky top-0 bg-white'>
         {/* wrapper */}
             <div className='flex justify-between items-center w-[1200px] '>
                  {/* right div */}
