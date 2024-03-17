@@ -8,9 +8,11 @@ import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HorizontalOptions from './HorizontalOptions';
 
-function Pet({_id, name, type, breed, age, gender, price, isNoFee, image, userId }) {
+function Pet({_id, name, type, breed, age, gender, price, isNoFee, image, userId ,status}) {
 
+  console.log("image",image)
   const [isPostLike , setIsPostLike]=useState(false);
+  const [isMenuOpen , setIsMenuOpen] = useState(false)
 
   const dumyUrl = "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=626&ext=jpg&ga=GA1.1.2055932209.1698127747&semt=ais"
 
@@ -45,6 +47,10 @@ const handleLikeButton =async (e)=>{
 
 }
 
+const handleMoreOptionClick =()=>{
+  setIsMenuOpen(!isMenuOpen)
+}
+
   return (
 
     <div className='w-full h-[85vh]  flex flex-col   p-1 shadow-lg bg-white border-1 border-[#bfbdbd]'>
@@ -59,9 +65,13 @@ const handleLikeButton =async (e)=>{
           <h1 className='py-2 font-semibold text-xl'>{userId.username}</h1>
         </div>
         <div className='relative'>
-          <MoreHorizIcon >
-          </MoreHorizIcon>
-          <HorizontalOptions userId={userId._id} />
+          <MoreHorizIcon onClick={handleMoreOptionClick} />
+
+         {isMenuOpen && <HorizontalOptions  
+         userId={userId._id}
+         isMenuOpen={isMenuOpen}
+         setIsMenuOpen={setIsMenuOpen}
+          />}
         </div>
       </div>
       <Link to={`/pet/${_id}`}>
@@ -101,7 +111,7 @@ const handleLikeButton =async (e)=>{
             <BookmarkBorderIcon />
             <SendOutlinedIcon />
           </div>
-          <span className='text-green-700 font-semibold'>Available</span>
+          <span className='text-green-700 font-semibold'>{status}</span>
         </div>
       </div>
     </div>

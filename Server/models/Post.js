@@ -10,7 +10,10 @@ const postSchema = new mongoose.Schema({
     price: { type: Number },
     isNoFee: { type: Boolean, default: false },
     image: {type:String,},
-    status:{ type:String,default:"Available"},
+    status:{ type:String,
+        default:"Available",
+        enum:["Adopted","Available"]
+    },
     location:{ type:String},
     likes:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],
 },{timestamps:true});

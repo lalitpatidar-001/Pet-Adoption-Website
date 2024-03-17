@@ -48,6 +48,25 @@ function SideBar({isCreateOpened ,setIsCreateOpened , page}) {
                 <AddBoxIcon/>
                 <span className='font-semibold'>Create</span>
                 </div>}
+
+                <Link to={`/request/${User}`}>
+                <div className='flex gap-1 px-4 pt-5 '>
+                <AccountBoxIcon/>
+                <span className='font-semibold'>Requests</span>
+                </div>
+                </Link>
+                <Link to={`/applicant/${User}`}>
+                <div className='flex gap-1 px-4 pt-5 '>
+                <AccountBoxIcon/>
+                <span className='font-semibold'>Applicants</span>
+                </div>
+                </Link>
+                <Link to={`/chat/${User}`}>
+                <div className='flex gap-1 px-4 pt-5 '>
+                <AccountBoxIcon/>
+                <span className='font-semibold'>Conversations</span>
+                </div>
+                </Link>
            
                 <div className='flex gap-1 px-4 pt-5 ' onClick={handleLogout}>
                 <LogoutOutlinedIcon />

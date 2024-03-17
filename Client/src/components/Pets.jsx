@@ -1,28 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Pet from './Pet'
-import CreatePost from './CreatePost'
+// import Createpet from './Createpet'
 import axios from 'axios';
-import { postContext } from '../context/PostContext';
+// import { petContext } from '../context/petContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAllPets } from '../redux/slices/petSlice';
 
-function Pets({ isCreateOpened, setIsCreateOpened,posts, setPosts }) {
-  
-  const {isPostCreated , setIsPostCreated} = useContext(postContext);
+function Pets({ isCreateOpened, setIsCreateOpened }) {
+  const {pets} = useSelector(state=>state.pet);
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function getAllPost() {
+    async function getAllpet() {
       try {
         setIsLoading(true);
-        const response = await axios.get("http://localhost:4000/api/post/all");
+        const response = await axios.get("http://localhost:4000/api/pet/all");
         setIsLoading(false);
-        setPosts(response.data);
+        dispatch(addAllPets({data:response.data}))
         console.log("response" ,response.data)
       }
       catch (error) {
           console.log(error)
       }
     }
-    getAllPost();
+    getAllpet();
   },[]);
 
 
@@ -34,8 +36,8 @@ function Pets({ isCreateOpened, setIsCreateOpened,posts, setPosts }) {
       
 
        {
-        posts && posts.map((post)=>{
-         return  <Pet {...post} key={post._id}/>
+        pets && pets.map((pet)=>{
+         return  <Pet {...pet} key={pet._id}/>
         })
        }
       </div>

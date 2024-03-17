@@ -6,6 +6,9 @@ import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
 import { userContext } from './context/UserContextProvider';
+import Reqeusts from './pages/Requests';
+import Applicant from './pages/Applicant';
+import Chat from './pages/Chat';
 
 function App() {
   const { User, setUser } = useContext(userContext);
@@ -26,6 +29,9 @@ function App() {
         <Route path="/" element={<PrivateRoute element={<Home />} />} />
         <Route path="/pet/:id" element={<PrivateRoute element={<PetInfo />} />} />
         <Route path="/profile/:id" element={<PrivateRoute element={<Profile />} />} />
+        <Route path="/request/:id" element={<PrivateRoute element={<Reqeusts />} />} />
+        <Route path="/applicant/:id" element={<PrivateRoute element={<Applicant />} />} />
+        <Route path="/chat/:id" element={<PrivateRoute element={<Chat/>} />} />
       </Routes>
     </Router>
   );

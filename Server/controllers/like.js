@@ -1,7 +1,6 @@
 const Post = require("../models/Post");
 
 const updateLike = async (req, res) => {
-    console.log("called");
     const { id } = req.params;
     const { postId } = req.query;
 
@@ -14,7 +13,6 @@ const updateLike = async (req, res) => {
         let isLike = post.likes.includes(id);
         if (!isLike) {
             const updatedPost = await Post.findByIdAndUpdate(postId, { $push: { likes: id } }, { new: true });
-            console.log(updatedPost);
             isLike=true;
             return res.status(200).json({ msg: "Post liked successfully" ,isLike});
         } else {
@@ -33,8 +31,6 @@ const updateLike = async (req, res) => {
 const isPostLike = async(req,res)=>{
     const {id} = req.params;
     const {postId} = req.query;
-    console.log(id)
-    console.log(postId)
     try{
         const post = await Post.findById({ _id: postId });
         if(!post) return res.status(404).json({msg:"post not found"});

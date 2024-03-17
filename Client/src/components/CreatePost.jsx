@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import axios from 'axios';
-import { postContext } from '../context/PostContext';
 import { userContext } from '../context/UserContextProvider';
+import {useDispatch} from "react-redux";
+import { updatePets } from '../redux/slices/petSlice';
+
 
 function CreatePost({ isCreateOpened, setIsCreateOpened , setIsPostLoading}) {
   const { User } = useContext(userContext);
-
-  const { isPostCreated, setIsPostCreated } = useContext(postContext);
+  const dispatch = useDispatch();
   const [isNoFeeChecked, setIsNoFeeChecked] = useState(false);
 
   const [image, setImage] = useState(null);
@@ -40,7 +41,8 @@ function CreatePost({ isCreateOpened, setIsCreateOpened , setIsPostLoading}) {
       const response = await axios.post(`http://localhost:4000/api/post/createpost/${User}`, postData);
 
       // Handle the response, you can log it for now
-      console.log('API Response:', response.data);
+      console.log('API Response:', response.data.post);
+      // dispatch(updatePets({data:response.data.post}))
 
       // Reset the form after successful submission
       setFormData({
@@ -54,8 +56,6 @@ function CreatePost({ isCreateOpened, setIsCreateOpened , setIsPostLoading}) {
       setImage(null);
       setIsNoFeeChecked(false);
       setIsCreateOpened(false);
-      setIsPostCreated(true)
-
     } catch (error) {
       console.error('Error:', error);
       // Handle error (show a message to the user, etc.)

@@ -4,10 +4,8 @@ const User = require('../models/User')
 
 const getUser = async(req,res)=>{
        const id =  req.params.id;
-       console.log(id)
       try{
         const user = await User.findById(id);
-        console.log(user)
         res.status(200).json(user)
         }catch(error){
             res.status(500).json("something went wrong on server");
@@ -18,10 +16,8 @@ const getUser = async(req,res)=>{
 
 // update profile
 const updateProfile = async (req, res) => {
-      console.log("update called")
       const id = req.query.id;
       const {fullname ,username , gender , address , DOB , profileImage} = req.body;
-      console.log("body " , req.body)
      
   
       try {
@@ -31,7 +27,6 @@ const updateProfile = async (req, res) => {
           if (!isUserExist) {
               return res.status(404).json({ msg: "User not found" });
           }
-          console.log("file" ,req.file)
           // Update the user
           const updateField = {};
           if(fullname) updateField.fullname = fullname;
@@ -45,7 +40,6 @@ const updateProfile = async (req, res) => {
           const updatedUser = await User.findByIdAndUpdate(id, updateField, { new: true });
   
           // Send the updated user as the response
-          console.log("updated field " , updateField)
           // res.json(updatedUser);
           return res.json({msg:"profile updated successfully"})
       } catch (error) {

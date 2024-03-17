@@ -5,15 +5,12 @@ const User = require('../models/User');
 
 //  post creation
 const createPost =  async (req, res) => {
-  console.log("create post called ")
   const userId = req.params.id
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No image uploaded' });
     }
     const { name, type, breed, age, gender, price, isNoFee, image } = req.body;
-    console.log(req.body)
-    console.log(req.file)
     const newPost = new Post({
       userId,
       name,
@@ -25,7 +22,6 @@ const createPost =  async (req, res) => {
       isNoFee,
       image: req.file.path,
     });
-    console.log(newPost)
     const savedPost = await newPost.save();
     return res.status(201).json({ message: 'Post created successfully', post: savedPost });
   } catch (error) {
@@ -36,7 +32,6 @@ const createPost =  async (req, res) => {
 
 // get all post 
 const getAllPost = async (req, res) => {
-  console.log("called")
 
   try {
     const posts = await Post.find().sort({ createdAt: -1 }).populate('userId');;
@@ -52,11 +47,9 @@ const getAllPost = async (req, res) => {
 // Create a route to get all posts with filter
 const getFilteredPost =  async (req, res) => {
   try {
-    console.log("called")
     // Extract filter criteria from query parameters
     const { type, breed, selectedGender, ageValue, rangePrice, isNoFeeChecked } = req.body;
     // Build a filter object based on the provided criteria
-    console.log(req.body)
     const filter = {};
     if (type) {
       filter.type = { $regex: new RegExp(type, 'i') };
@@ -70,7 +63,6 @@ const getFilteredPost =  async (req, res) => {
     } else if (isNoFeeChecked) {
       filter.isNoFee=true;
     }
-console.log("filter",filter)
     // Fetch pets based on the filter
     const filteredPosts = await Post.find(filter).sort({ createdAt: -1 }).populate('userId');
 
@@ -119,11 +111,9 @@ const deletePost = async(req,res)=>{
 const updateSavedPost = async(req,res)=>{
   const {id} = req.params;
   const {postId} = req.query;
-  console.log(id,postId)
   try {
     const post = await User.findById(id);
     if(!post) return res.status(404).json({msg:"post not found"});
-    console.log(post)
     let isPostSaved = post.savedPosts.includes(postId);
     if(!isPostSaved){
       const updatedPost = await User.findByIdAndUpdate(id,{$push:{savedPosts:postId}},{new:true});

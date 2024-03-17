@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 function Filters({onFilterChange , setIsPostLoading}) {
 
  const [ageValue, setAgeValue] = useState(50); 
- const [rangePrice, setRangePrice] = useState(50000); 
+ const [rangePrice, setRangePrice] = useState(0); 
  const [isNoFeeChecked , setIsNoFeeChecked] = useState(false);
  const [selectedGender, setSelectedGender] = useState('');
  const [type,setType] = useState("");

@@ -4,7 +4,6 @@ const { ObjectId } = require('mongodb');
 
 // create new user
 const registeration = async (req, res) => {
-        console.log("called");
         const user = req.body;
         try {
                 const userExists = await User.findOne({ username: req.body.username });
@@ -29,11 +28,9 @@ const registeration = async (req, res) => {
 
 
 const login = async(req,res)=>{
-        console.log("called login")
         const user = req.body;
         try{
                 const userExists = await User.findOne({username:req.body.username});
-                console.log(userExists);
                 if(!userExists) return res.status(404).json({msg:"wrong username"});
 
                 bcrypt.compare(req.body.password, userExists.password, function(err, resp) {
