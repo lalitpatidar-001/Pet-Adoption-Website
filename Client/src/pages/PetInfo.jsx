@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios"
 import { useDispatch, useSelector } from 'react-redux';
 import { userContext } from '../context/UserContextProvider';
 import toast from 'react-hot-toast';
 import { updateRequest } from '../redux/slices/requestSlice';
 import SideBar from '../components/SideBar';
+import { setCurrentChat, updateChats } from '../redux/slices/chatSlice';
 
 function PetInfo() {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { requests } = useSelector(state => state.request);
     const { User, setUser } = useContext(userContext);
     const cleanedUserId = User?.replace(/"/g, '');
@@ -21,14 +23,14 @@ function PetInfo() {
     const imageAddress = postData.image?.replace(/\\/g, '/');
     const imageURL = `http://localhost:4000/${imageAddress}`;
 
-    console.log("isAlreadyRequested",isAlreadyRequested)
-    console.log("isAlreadyRequested",isAlreadyRequested)
+    console.log("isAlreadyRequested", isAlreadyRequested)
+    console.log("isAlreadyRequested", isAlreadyRequested)
     useEffect(() => {
         async function getPostData(postId) {
             try {
                 const response = await axios.get(`http://localhost:4000/api/post/get/${postId}`);
                 console.log(response)
-                console.log("post data",response.data.post)
+                console.log("post data", response.data.post)
                 setPostData(response.data.post)
             } catch (error) {
                 console.log(error)
@@ -37,25 +39,51 @@ function PetInfo() {
         getPostData(id);
     }, [id])
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(requests)
         setIsAlreadyRequested(requests.some(item => item.pet._id === id))
-    },[requests,id])
+    }, [requests, id])
 
     const handleRequestSendClick = async () => {
         try {
             const response = await axios.post("http://localhost:4000/api/adoption-request/add-request/",
                 {
-                    ownerId:postData.userId,
-                    petId:postData._id,
-                    requesterId:cleanedUserId,
+                    ownerId: postData.userId,
+                    petId: postData._id,
+                    requesterId: cleanedUserId,
                 });
             console.log(response.data)
-            if(response.status === 201){
+            if (response.status === 201) {
                 toast.success("Adoption request sent successfully");
-                dispatch(updateRequest({data:response.data.data}))
-
+                dispatch(updateRequest({ data: response.data.data }))
             }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleChatContactClick = async () => {
+        try {
+            const response = await axios.post("http://localhost:4000/api/chat/create-chat",
+                {
+                    memberOne: User,
+                    memberTwo: postData.userId
+                });
+            if(response.status === 200){
+                // chat already exist
+                console.log(" chat exists")
+                dispatch(setCurrentChat({data:response.data.data}));
+                navigate(`/chat/${User}`);
+            }
+            if(response.status === 201){
+                // new chat created
+                console.log("new chat created")
+                dispatch(updateChats({data:response.data.data}));
+                dispatch(setCurrentChat({data:response.data.data}));
+                navigate(`/chat/${User}`);
+            }
+            console.log(response);
+            console.log(response.data.data);
         } catch (error) {
             console.log(error)
         }
@@ -112,7 +140,7 @@ function PetInfo() {
                         <div className='flex gap-[10px] '>
 
                             {!isAlreadyRequested ? <button className='bg-[#007BE5] rounded px-2 text-white font-semibold flex-1 '
-                            onClick={handleRequestSendClick}
+                                onClick={handleRequestSendClick}
                             >
                                 Request To Adopt
                             </button>
@@ -120,7 +148,7 @@ function PetInfo() {
                                 <button className='bg-gray-300 cursor-default text-gray-600 rounded px-2 font-bold'>Already Requested</button>
                             }
 
-                            <button className='bg-[#007BE5] rounded px-2 text-white font-semibold flex-1'>Chat Contact</button>
+                            <button className='bg-[#007BE5] rounded px-2 text-white font-semibold flex-1' onClick={handleChatContactClick}>Chat Contact</button>
                         </div>
                     </div>
                     <div className='flex-[2] h-[70vh] overflow-hidden '>

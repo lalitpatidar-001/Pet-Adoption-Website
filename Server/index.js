@@ -13,18 +13,23 @@ const auhtRouter = require('./routers/auth');
 const postRouter = require('./routers/post');
 const userRouter = require('./routers/user');
 const adoptionRequestRouter = require('./routers/adoptionRequest');
+const chatRouter = require('./routers/chat');
+const messageRouter = require('./routers/message');
 
 // middlewares
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/profiles', express.static(path.join(__dirname, 'profiles')));
+app.use('/messageImages', express.static(path.join(__dirname, 'messageImages')));
 
 // routers
 app.use("/api/auth", auhtRouter);
 app.use("/api/post", postRouter);
 app.use("/api/user", userRouter);
 app.use("/api/adoption-request", adoptionRequestRouter);
+app.use("/api/chat", chatRouter);
+app.use("/api/message", messageRouter);
 
 
 // create socket server 
@@ -78,6 +83,18 @@ io.on("connection" , (socket)=>{
         putUser(user_id,socket.id);
     }
     console.log(onlineUsers);
+
+    socket.on("sent_new_message",(data)=>{
+      console.log("message",data);
+      const {to , from} = data;
+      console.log("to",to)
+      const to_user_socketId = getUser(to);
+      console.log(to_user_socketId)
+      if(to_user_socketId){
+        console.log("called")
+        io.to(to_user_socketId).emit("new_message_arrived",data);
+      }
+    })
     
 })
 

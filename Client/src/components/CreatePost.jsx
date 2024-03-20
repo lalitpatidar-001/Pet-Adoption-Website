@@ -42,7 +42,7 @@ function CreatePost({ isCreateOpened, setIsCreateOpened , setIsPostLoading}) {
 
       // Handle the response, you can log it for now
       console.log('API Response:', response.data.post);
-      // dispatch(updatePets({data:response.data.post}))
+      dispatch(updatePets({data:response.data.post}))
 
       // Reset the form after successful submission
       setFormData({

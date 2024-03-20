@@ -1,6 +1,6 @@
 import React from 'react'
-import Conversatoin from '../components/conversation/Conversatoin'
-import Chats from '../components/conversation/chats/Chats'
+import Conversatoin from '../components/conversations/Conversatoin'
+import Chats from "../components/chats/Chats"
 
 const Chat = () => {
     return (

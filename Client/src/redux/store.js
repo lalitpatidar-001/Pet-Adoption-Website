@@ -1,14 +1,19 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import storage from 'redux-persist/lib/storage'
-import {persistReducer, persistStore} from "redux-persist"
+import { persistReducer, persistStore } from "redux-persist"
 import petReducer from "./slices/petSlice";
 import requestReducer from "./slices/requestSlice";
 import applicantReducer from "./slices/applicantSlice";
+import chatReducer from "./slices/chatSlice";
+import messageReducer from "./slices/messageSlice";
+
 
 const rootReducer = combineReducers({
-    pet:petReducer,
-    request:requestReducer,
-    applicant:applicantReducer,
+    pet: petReducer,
+    request: requestReducer,
+    applicant: applicantReducer,
+    chat: chatReducer,
+    message: messageReducer
 });
 
 const persistConfig = {
