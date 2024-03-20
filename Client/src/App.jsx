@@ -9,6 +9,7 @@ import { userContext } from './context/UserContextProvider';
 import Reqeusts from './pages/Requests';
 import Applicant from './pages/Applicant';
 import Chat from './pages/Chat';
+import DonateUs from './pages/DonateUs';
 
 function App() {
   const { User, setUser } = useContext(userContext);
@@ -32,6 +33,7 @@ function App() {
         <Route path="/request/:id" element={<PrivateRoute element={<Reqeusts />} />} />
         <Route path="/applicant/:id" element={<PrivateRoute element={<Applicant />} />} />
         <Route path="/chat/:id" element={<PrivateRoute element={<Chat/>} />} />
+        <Route path="/donate" element={<PrivateRoute element={<DonateUs/>} />} />
       </Routes>
     </Router>
   );

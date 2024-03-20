@@ -69,17 +69,17 @@ function PetInfo() {
                     memberOne: User,
                     memberTwo: postData.userId
                 });
-            if(response.status === 200){
+            if (response.status === 200) {
                 // chat already exist
                 console.log(" chat exists")
-                dispatch(setCurrentChat({data:response.data.data}));
+                dispatch(setCurrentChat({ data: response.data.data }));
                 navigate(`/chat/${User}`);
             }
-            if(response.status === 201){
+            if (response.status === 201) {
                 // new chat created
                 console.log("new chat created")
-                dispatch(updateChats({data:response.data.data}));
-                dispatch(setCurrentChat({data:response.data.data}));
+                dispatch(updateChats({ data: response.data.data }));
+                dispatch(setCurrentChat({ data: response.data.data }));
                 navigate(`/chat/${User}`);
             }
             console.log(response);
@@ -137,19 +137,23 @@ function PetInfo() {
                             <p className='mt-[10px]'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat quisquam, qui odio nostrum dolorum nisi blanditiis dolore obcaecati corporis quibusdam.</p>
 
                         </div>
-                        <div className='flex gap-[10px] '>
+                        {
 
-                            {!isAlreadyRequested ? <button className='bg-[#007BE5] rounded px-2 text-white font-semibold flex-1 '
-                                onClick={handleRequestSendClick}
-                            >
-                                Request To Adopt
-                            </button>
-                                :
-                                <button className='bg-gray-300 cursor-default text-gray-600 rounded px-2 font-bold'>Already Requested</button>
-                            }
+                            <div className='flex gap-[10px] '>
+                              {  User!==postData.userId && <>
+                                    {!isAlreadyRequested ? <button className='bg-[#007BE5] rounded px-2 text-white font-semibold flex-1 '
+                                        onClick={handleRequestSendClick}
+                                    >
+                                        Request To Adopt
+                                    </button>
+                                        :
+                                        <button className='bg-gray-300 cursor-default text-gray-600 rounded px-2 font-bold'>Already Requested</button>
+                                    }
 
-                            <button className='bg-[#007BE5] rounded px-2 text-white font-semibold flex-1' onClick={handleChatContactClick}>Chat Contact</button>
-                        </div>
+                                    <button className='bg-[#007BE5] rounded px-2 text-white font-semibold flex-1' onClick={handleChatContactClick}>Chat Contact</button>
+                                </>}
+                            </div>
+                        }
                     </div>
                     <div className='flex-[2] h-[70vh] overflow-hidden '>
                         <img className='w-full h-full' src={imageURL} alt="" />

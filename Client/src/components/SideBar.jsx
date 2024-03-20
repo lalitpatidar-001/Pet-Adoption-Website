@@ -67,6 +67,12 @@ function SideBar({isCreateOpened ,setIsCreateOpened , page}) {
                 <span className='font-semibold'>Conversations</span>
                 </div>
                 </Link>
+                <Link to={`/donate`}>
+                <div className='flex gap-1 px-4 pt-5 '>
+                <AccountBoxIcon/>
+                <span className='font-semibold'>Donate Us</span>
+                </div>
+                </Link>
            
                 <div className='flex gap-1 px-4 pt-5 ' onClick={handleLogout}>
                 <LogoutOutlinedIcon />

@@ -23,6 +23,7 @@ const createPost =  async (req, res) => {
       image: req.file.path,
     });
     const savedPost = await newPost.save();
+    await savedPost.populate("userId")
     return res.status(201).json({ message: 'Post created successfully', post: savedPost });
   } catch (error) {
     console.error(error);
@@ -34,7 +35,7 @@ const createPost =  async (req, res) => {
 const getAllPost = async (req, res) => {
 
   try {
-    const posts = await Post.find().sort({ createdAt: -1 }).populate('userId');;
+    const posts = await Post.find({status:"Available"}).sort({ createdAt: -1 }).populate('userId');;
     return res.status(200).json(posts);
   }
   catch (error) {
@@ -51,6 +52,7 @@ const getFilteredPost =  async (req, res) => {
     const { type, breed, selectedGender, ageValue, rangePrice, isNoFeeChecked } = req.body;
     // Build a filter object based on the provided criteria
     const filter = {};
+    filter.status = "Available"
     if (type) {
       filter.type = { $regex: new RegExp(type, 'i') };
     }

@@ -7,8 +7,15 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
+import { userContext } from '../context/UserContextProvider';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { deletePet } from '../redux/slices/petSlice';
 
-export default function MenuDialog({isMenuOpen , setIsMenuOpen}) {
+export default function MenuDialog({isMenuOpen,userId,postId , setIsMenuOpen}) {
+    const {User} = React.useContext(userContext);
+    const dispatch = useDispatch();
     const anchorRef = React.useRef(null);
 
     const handleToggle = () => {
@@ -42,13 +49,24 @@ export default function MenuDialog({isMenuOpen , setIsMenuOpen}) {
         prevOpen.current = isMenuOpen;
     }, [isMenuOpen]);
 
+    const handleDeletePost = async()=>{
+        try{
+            const response = await axios.delete(`http://localhost:4000/api/post/delete/${postId}`);
+            console.log(response);
+            if(response.status===200){
+                toast.success("Post Deleted Successfully");
+                dispatch(deletePet({data:postId}))
+            }
+        }catch(error){
+            console.log(error);
+        }
+    }
+
     return (
         <Stack direction="row" spacing={2}>
             <Paper>
                 <MenuList>
-                    <MenuItem>Profile</MenuItem>
-                    <MenuItem>My account</MenuItem>
-                    <MenuItem>Logout</MenuItem>
+                   {User===userId &&  <MenuItem onClick={handleDeletePost}>Delete</MenuItem>}
                 </MenuList>
             </Paper>
             <div>

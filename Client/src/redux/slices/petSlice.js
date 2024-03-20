@@ -13,10 +13,11 @@ const petSlice = createSlice({
             state.pets = action.payload.data;
         },
         updatePets:(state,action)=>{
-            state.pets.push(action.payload.data);
+            state.pets.unshift(action.payload.data);
         },
         deletePet:(state,action)=>{
             const id = action.payload.data
+            console.log("pet oddd",id)
             state.pets = state.pets.filter((item)=> item._id !== id);
         },
     }

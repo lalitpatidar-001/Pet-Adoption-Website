@@ -72,6 +72,7 @@ function Pet({ _id, name, type, breed, age, gender, price, isNoFee,userId, image
           <MoreHorizIcon onClick={handleMoreOptionClick} />
 
           {isMenuOpen && <HorizontalOptions
+            postId={_id}
             userId={userId._id}
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
