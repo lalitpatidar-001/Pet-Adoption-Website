@@ -38,7 +38,7 @@ function Pets({ isCreateOpened, setIsCreateOpened }) {
       
 
        {
-        pets && pets?.map((pet)=>{
+        pets?.length > 0 && pets?.map((pet)=>{
          return  <Pet {...pet} key={pet._id}/>
         })
        }
