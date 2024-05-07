@@ -12,6 +12,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePet } from '../redux/slices/petSlice';
+import axiosInstance from '../axios';
 
 export default function MenuDialog({isMenuOpen,userId,postId , setIsMenuOpen}) {
     const {User} = React.useContext(userContext);
@@ -51,7 +52,7 @@ export default function MenuDialog({isMenuOpen,userId,postId , setIsMenuOpen}) {
 
     const handleDeletePost = async()=>{
         try{
-            const response = await axios.delete(`http://localhost:4000/api/post/delete/${postId}`);
+            const response = await axiosInstance.delete(`/post/delete/${postId}`);
             console.log(response);
             if(response.status===200){
                 toast.success("Post Deleted Successfully");

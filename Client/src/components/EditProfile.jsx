@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { userContext } from '../context/UserContextProvider';
 import axios from 'axios';
+import axiosInstance from '../axios';
 
 function EditProfile({ isEditClicked, setIsEditClicked }) {
     const [isLoading , setIsLoading]=useState(false);
@@ -30,7 +31,7 @@ function EditProfile({ isEditClicked, setIsEditClicked }) {
         formData.append('profileImage', profileImage);
         console.log(formData)
             setIsLoading(true)
-            const response = await axios.post(`http://localhost:4000/api/user/update?id=${cleanedUserId}`, formData);
+            const response = await axiosInstance.post(`/user/update?id=${cleanedUserId}`, formData);
             setIsLoading(false);
             // reseting data
             setprofileImage(null);

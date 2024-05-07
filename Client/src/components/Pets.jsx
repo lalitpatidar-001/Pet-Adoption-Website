@@ -5,6 +5,7 @@ import axios from 'axios';
 // import { petContext } from '../context/petContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAllPets } from '../redux/slices/petSlice';
+import axiosInstance from '../axios';
 
 function Pets({ isCreateOpened, setIsCreateOpened }) {
   const {pets} = useSelector(state=>state.pet);
@@ -15,7 +16,7 @@ function Pets({ isCreateOpened, setIsCreateOpened }) {
     async function getAllpet() {
       try {
         setIsLoading(true);
-        const response = await axios.get("http://localhost:4000/api/pet/all");
+        const response = await axiosInstance.get("/pet/all");
         setIsLoading(false);
         dispatch(addAllPets({data:response.data}))
         console.log("response" ,response.data)

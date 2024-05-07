@@ -5,6 +5,7 @@ import { userContext } from '../context/UserContextProvider';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAllRequest } from '../redux/slices/requestSlice';
+import axiosInstance from '../axios';
 
 const Reqeusts = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Reqeusts = () => {
   useEffect(() => {
     async function getAllRequest() {
       try {
-        const response = await axios.get(`http://localhost:4000/api/adoption-request/all-sent-request/${cleanedUserId}`);
+        const response = await axiosInstance.get(`/adoption-request/all-sent-request/${cleanedUserId}`);
         console.log(response);
         console.log(response.data.data);
         dispatch(addAllRequest({ data: response.data.data }));

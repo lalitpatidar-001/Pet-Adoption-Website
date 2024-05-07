@@ -4,6 +4,7 @@ import axios from 'axios'
 import { userContext } from '../../context/UserContextProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAllWishlists } from '../../redux/slices/wishlistSlice';
+import axiosInstance from '../../axios';
 
 const Wishlists = () => {
   const { User } = useContext(userContext);
@@ -12,7 +13,7 @@ const Wishlists = () => {
   useEffect(()=>{
     async function getWishlist (){
       try{
-        const response = await axios.get(`http://localhost:4000/api/user/wishlists/${User}`)
+        const response = await axiosInstancei.get(`/user/wishlists/${User}`)
         console.log(response)
         console.log(response.data.data);
         dispatch(addAllWishlists({data:response.data.data}))

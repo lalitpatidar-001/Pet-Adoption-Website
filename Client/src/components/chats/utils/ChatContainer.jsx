@@ -4,6 +4,7 @@ import { userContext } from "../../../context/UserContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios"
 import { addAllChats } from '../../../redux/slices/chatSlice';
+import axiosInstance from '../../../axios';
 const ChatContainer = () => {
     const { User } = useContext(userContext);
     const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const ChatContainer = () => {
     useEffect(() => {
         async function getAllChats() {
             try {
-                const response = await axios.get(`http://localhost:4000/api/chat/all-chats/${User}`);
+                const response = await axiosInstance.get(`/chat/all-chats/${User}`);
                 console.log(response)
                 console.log(response.data.data)
                 dispatch(addAllChats({ data: response.data.data }))

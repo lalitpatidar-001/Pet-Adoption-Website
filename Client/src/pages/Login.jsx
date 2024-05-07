@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { userContext } from '../context/UserContextProvider';
+import axiosInstance from '../axios';
 function Login() {
     const navigate = useNavigate();
     const {User,setUser} = useContext(userContext);
@@ -21,7 +22,7 @@ function Login() {
         e.preventDefault();
         setIsLoading(true);
         try{
-            const response = await axios.post("http://localhost:4000/api/auth/login",userData);
+            const response = await axiosInstance.post("auth/login",userData);
             setIsLoading(false);
             console.log(response);
             if(response.status=200) {

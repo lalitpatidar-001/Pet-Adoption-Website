@@ -8,6 +8,7 @@ import { userContext } from '../../../context/UserContextProvider';
 import { updateMessages } from '../../../redux/slices/messageSlice';
 import { socket } from '../../../socket';
 import ImagePreview from '../footerUtils/ImagePreview';
+import axiosInstance from '../../../axios';
 
 const Footer = () => {
     const [message, setMessage] = useState("");
@@ -27,7 +28,7 @@ const Footer = () => {
     const handleMessageSendClick = async () => {
         if (message.length > 0) {
             try {
-                const response = await axios.post(`http://localhost:4000/api/message/text-message/${User}`, {
+                const response = await axiosInstance.post(`/message/text-message/${User}`, {
                     chatId: currentChat._id,
                     to: toUser._id,
                     type: "Text",
@@ -55,7 +56,7 @@ const Footer = () => {
                 formData.append("to", toUser._id);
                 formData.append("type", "Image");
 
-                const response = await axios.post(`http://localhost:4000/api/message/image-message/${User}`,
+                const response = await axiosInstance.post(`/message/image-message/${User}`,
                     formData
                     ,
                     {

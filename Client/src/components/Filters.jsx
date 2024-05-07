@@ -1,6 +1,7 @@
 import { Checkbox } from '@mui/material'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import axiosInstance from '../axios';
 
 function Filters({onFilterChange , setIsPostLoading}) {
 
@@ -50,7 +51,7 @@ function Filters({onFilterChange , setIsPostLoading}) {
               };
           console.log(updatedFilterParams)
         //   setIsPostLoading(true)
-          const response = await axios.post('http://localhost:4000/api/post/getfilteredposts', updatedFilterParams);
+          const response = await axiosInstance.post('/post/getfilteredposts', updatedFilterParams);
 
           onFilterChange(response.data);
         console.log("filter response ",response.data);

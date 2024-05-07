@@ -5,6 +5,7 @@ import { format } from "timeago.js"
 import { toast } from "react-hot-toast"
 import { useDispatch } from 'react-redux'
 import { updateApplicantStatus } from '../redux/slices/applicantSlice'
+import axiosInstance from '../axios'
 
 const ApplicantCard = ({ _id, createdAt, owner, status, pet, requester }) => {
     const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const ApplicantCard = ({ _id, createdAt, owner, status, pet, requester }) => {
     // const cleanedUserId = User?.replace(/"/g, '');
     const handleAcceptRequest = async () => {
         try {
-            const response = await axios.put(`http://localhost:4000/api/adoption-request/accept-request/${_id}`);
+            const response = await axiosInstance.put(`/adoption-request/accept-request/${_id}`);
             console.log(response)
             console.log(response.data.data)
             if (response.status === 200) {

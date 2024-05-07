@@ -7,6 +7,7 @@ import { addAllMessages, updateMessages } from '../../../redux/slices/messageSli
 import { userContext } from '../../../context/UserContextProvider'
 import { socket } from '../../../socket'
 import ImageMessage from '../messageUtils/ImageMessage'
+import axiosInstance from '../../../axios'
 
 
 const Messages = () => {
@@ -42,7 +43,7 @@ const Messages = () => {
     useEffect(() => {
         async function getMessages() {
             try {
-                const response = await axios.get(`http://localhost:4000/api/message/all-messages/${currentChat._id}`);
+                const response = await axiosInstance.get(`/message/all-messages/${currentChat._id}`);
                 console.log(response)
                 console.log(response.data.data)
                 console.log(response.data.data)

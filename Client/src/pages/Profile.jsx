@@ -14,6 +14,7 @@ import CenteredTabs from '../components/Tab';
 import Posts from '../components/profile/Posts';
 import Adoptions from '../components/profile/Adoptions';
 import Wishlists from '../components/profile/Wishlists';
+import axiosInstance, { STATIC_PATH } from '../axios';
 
 const dumyUrl = "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600";
 
@@ -35,7 +36,7 @@ function Profile() {
         async function getUser() {
             try {
                 setIsLoading(true);
-                const response = await axios.get(`http://localhost:4000/api/user/${id}`);
+                const response = await axiosInstance.get(`/user/${id}`);
                 setIsLoading(false)
                 setUserData(response.data);
 
@@ -51,7 +52,7 @@ function Profile() {
     useEffect(() => {
         setProfileImageURL(() => {
             const imageAddress = userData.profileImage?.replace(/\\/g, '/');
-            const imageUrl = `http://localhost:4000/${imageAddress}`;
+            const imageUrl = `${STATIC_PATH+imageAddress}`;
             console.log("profileImageURL", profileImageURL);
             console.log("userData", userData);
             return imageUrl
@@ -61,7 +62,7 @@ function Profile() {
     useEffect(() => {
         async function getUserPosts(userId) {
             try {
-                const response = await axios.get(`http://localhost:4000/api/post/getall/${userId}`);
+                const response = await axiosInstance.get(`/post/getall/${userId}`);
                 console.log("response ", response)
                 console.log("response data", response.data);
                 setUserPosts(response.data.posts);

@@ -1,8 +1,9 @@
 import React from 'react'
+import { STATIC_PATH } from '../../../axios'
 
 const ImageMessage = ({ User, scrollRef, text, image, from, createdAt }) => {
 
-    const fullPath = "http://localhost:4000/" + image
+    const fullPath = STATIC_PATH + image
     return (
         <div ref={scrollRef} className={`w-full flex ${User === from ? "justify-end " : "justify-start"}`}>
             <div className={`flex flex-col gap-2  max-w-[90%] w-fit p-1 rounded ${User === from ? "bg-blue-500 text-white" : "bg-gray-300"} relative`}>

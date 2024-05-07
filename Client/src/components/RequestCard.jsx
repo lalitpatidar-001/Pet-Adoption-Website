@@ -5,12 +5,13 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteRequest } from '../redux/slices/requestSlice';
 import { format } from "timeago.js"
+import axiosInstance from '../axios'
 
 export const RequestCard = ({ _id, status, pet, owner, updatedAt }) => {
     const dispatch = useDispatch();
     const handleRequestCanecl = async () => {
         try {
-            const response = await axios.delete(`http://localhost:4000/api/adoption-request/cancel-request/${_id}`);
+            const response = await axiosInstance.delete(`/adoption-request/cancel-request/${_id}`);
             if (response.status === 200) {
                 dispatch(deleteRequest({ data: _id }));
                 toast.success("Request canceled successfully");

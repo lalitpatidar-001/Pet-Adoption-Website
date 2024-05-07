@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { addAllWishlists, deleteWishlist, updateWishlist } from '../redux/slices/wishlistSlice';
 import toast from 'react-hot-toast';
+import axiosInstance, { STATIC_PATH } from '../axios';
 
 function Pet({ _id, name, type, breed, age, gender, price, isNoFee, userId, image, status }) {
   const dispatch = useDispatch();
@@ -22,10 +23,10 @@ function Pet({ _id, name, type, breed, age, gender, price, isNoFee, userId, imag
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const imageAddress = image?.replace(/\\/g, '/');
-  const imageURL = `http://localhost:4000/${imageAddress}`;
+  const imageURL = `${STATIC_PATH + imageAddress}`;
 
   const profileAddress = userId?.profileImage?.replace(/\\/g, '/');
-  const profileURL = `http://localhost:4000/${profileAddress}`;
+  const profileURL = `${STATIC_PATH + profileAddress}`;
 
   useEffect(() => {
     setIsPostSaved(wishlists?.some(item => item.post._id === _id))
@@ -34,7 +35,7 @@ function Pet({ _id, name, type, breed, age, gender, price, isNoFee, userId, imag
   useEffect(() => {
     async function getIslike(userId, _id) {
       try {
-        const response = await axios.get(`http://localhost:4000/api/post/islike/${User}?postId=${_id}`);
+        const response = await axiosInstance.get(`/post/islike/${User}?postId=${_id}`);
         setIsPostLike(response.data.isLike);
       } catch (error) {
         console.log(error);
@@ -45,7 +46,7 @@ function Pet({ _id, name, type, breed, age, gender, price, isNoFee, userId, imag
 
   const handleLikeButton = async () => {
     try {
-      const response = await axios.post(`http://localhost:4000/api/post/like/${User}?postId=${_id}`);
+      const response = await axiosInstance.post(`/post/like/${User}?postId=${_id}`);
       if (response.status === 201) {
         setIsPostLike(response.data.isLike);
         toast.success("Liked Post")
@@ -61,7 +62,7 @@ function Pet({ _id, name, type, breed, age, gender, price, isNoFee, userId, imag
 
   const handleClickSavePost = async () => {
     try {
-      const response = await axios.put(`http://localhost:4000/api/post/savepost/${User}/?postId=${_id}`);
+      const response = await axiosInstance.put(`/post/savepost/${User}/?postId=${_id}`);
       console.log(response)
       console.log(response.data.data)
       if (response.status === 201) {

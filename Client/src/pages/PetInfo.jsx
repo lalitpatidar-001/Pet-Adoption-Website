@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { updateRequest } from '../redux/slices/requestSlice';
 import SideBar from '../components/SideBar';
 import { setCurrentChat, updateChats } from '../redux/slices/chatSlice';
+import axiosInstance, { STATIC_PATH } from '../axios';
 
 function PetInfo() {
     const { id } = useParams();
@@ -21,14 +22,14 @@ function PetInfo() {
     const [postData, setPostData] = useState({});
 
     const imageAddress = postData.image?.replace(/\\/g, '/');
-    const imageURL = `http://localhost:4000/${imageAddress}`;
+    const imageURL = `${STATIC_PATH+imageAddress}`;
 
     console.log("isAlreadyRequested", isAlreadyRequested)
     console.log("isAlreadyRequested", isAlreadyRequested)
     useEffect(() => {
         async function getPostData(postId) {
             try {
-                const response = await axios.get(`http://localhost:4000/api/post/get/${postId}`);
+                const response = await axiosInstance.get(`/post/get/${postId}`);
                 console.log(response)
                 console.log("post data", response.data.post)
                 setPostData(response.data.post)
@@ -46,7 +47,7 @@ function PetInfo() {
 
     const handleRequestSendClick = async () => {
         try {
-            const response = await axios.post("http://localhost:4000/api/adoption-request/add-request/",
+            const response = await axiosInstance.post("/adoption-request/add-request/",
                 {
                     ownerId: postData.userId,
                     petId: postData._id,
@@ -64,7 +65,7 @@ function PetInfo() {
 
     const handleChatContactClick = async () => {
         try {
-            const response = await axios.post("http://localhost:4000/api/chat/create-chat",
+            const response = await axiosInstance.post("/chat/create-chat",
                 {
                     memberOne: User,
                     memberTwo: postData.userId

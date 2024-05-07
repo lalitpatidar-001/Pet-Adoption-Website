@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, json, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import axiosInstance from '../axios';
 
 function Registration() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Registration() {
         setIsLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:4000/api/auth/register', userData);
+            const response = await axiosInstance.post('/auth/register', userData);
             setIsLoading(false);
             console.log(response.data);
            if(response.status === 201){
