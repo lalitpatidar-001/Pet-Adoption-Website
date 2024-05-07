@@ -1,12 +1,13 @@
 import axios from 'axios';
 
+// https://api-pet-adoption.vercel.app/api
 const axiosInstance = axios.create({
-  baseURL: 'https://api-pet-adoption.vercel.app/api', // Base URL for all requests
+  baseURL: 'http://localhost:4000/api', // Base URL for all requests
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-export const STATIC_PATH = "https://api-pet-adoption.vercel.app/"
+export const STATIC_PATH = "http://localhost:4000"
 
 export default axiosInstance;

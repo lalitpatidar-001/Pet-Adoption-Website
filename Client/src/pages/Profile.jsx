@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SideBar from '../components/SideBar';
 import Pet from '../components/Pet';
-import PetProfile from '../components/petProfile';
+import PetProfile from '../components/PetProfile';
 import EditProfile from '../components/EditProfile';
 import CancelIcon from '@mui/icons-material/Cancel';
 import BGCreatePost from '../components/BGCreatePost';

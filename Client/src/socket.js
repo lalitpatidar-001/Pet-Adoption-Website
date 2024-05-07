@@ -5,7 +5,7 @@ let socket;
 
 const connectSocket = (user_id, callback) => {
     console.log("user_iddd", user_id); // Verify user_id value
-    socket = io("https://api-pet-adoption.vercel.app/", {
+    socket = io("http://localhost:4000", {
         query: `user_id=${user_id}`
     });
 
@@ -14,5 +14,5 @@ const connectSocket = (user_id, callback) => {
     //     callback(socket);
     // });
 }
-
+// https://api-pet-adoption.vercel.app/
 export { socket, connectSocket };
