@@ -17,7 +17,7 @@ const wishlistSlice = createSlice({
         },
         deleteWishlist:(state,action)=>{
             const id = action.payload.data
-            state.wishlists = state.wishlists.filter((item)=> item.post._id !== id);
+            state.wishlists = state?.wishlists?.filter((item)=> item.post._id !== id);
         },
     }
 });

@@ -17,7 +17,7 @@ const requestSlice = createSlice({
         },
         deleteRequest:(state,action)=>{
             const id = action.payload.data
-            state.requests = state.requests.filter((item)=> item._id !== id);
+            state.requests = state?.requests?.filter((item)=> item._id !== id);
         },
     }
 });
