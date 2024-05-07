@@ -27,7 +27,7 @@ const Wishlists = () => {
       <>
 
         {wishlists &&
-          wishlists.map((post) => {
+          wishlists?.map((post) => {
             return <Pet key={post._id} {...post?.post} userId={post?.owner} />
           })
         }

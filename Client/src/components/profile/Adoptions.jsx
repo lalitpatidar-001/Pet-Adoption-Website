@@ -24,7 +24,7 @@ const Adoptions = () => {
       <>
 
         {adoptions &&
-          adoptions.map((post) => {
+          adoptions?.map((post) => {
             return <Pet key={post._id} {...post?.pet} userId={post?.owner} />
           })
         }

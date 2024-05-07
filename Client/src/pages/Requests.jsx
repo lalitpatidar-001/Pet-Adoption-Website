@@ -33,7 +33,7 @@ const Reqeusts = () => {
       <SideBar />
       <div className='flex-[6] flex flex-col gap-1 bg-[#dddddd] p-2  '>
         {
-          requests.map((item) => (
+          requests?.map((item) => (
             <RequestCard key={item._id} {...item} />
           ))
         }

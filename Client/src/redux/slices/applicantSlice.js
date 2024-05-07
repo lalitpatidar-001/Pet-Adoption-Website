@@ -21,7 +21,7 @@ const applicantSlice = createSlice({
         },
         updateApplicantStatus:(state,action)=>{
             const id = action.payload.data
-            state.applicants.map(item=>{
+            state?.applicants?.map(item=>{
                 if(item._id===id){
                     item.status="adopted"
                 }

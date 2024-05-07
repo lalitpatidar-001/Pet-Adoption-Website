@@ -6,7 +6,7 @@ const Posts = ({userPosts}) => {
         <>
 
             {userPosts &&
-                userPosts.map((post) => {
+                userPosts?.map((post) => {
                     return <Pet key={post._id} {...post} />
                 })
             }
