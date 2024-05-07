@@ -18,6 +18,7 @@ import Wishlists from '../components/profile/Wishlists';
 const dumyUrl = "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600";
 
 function Profile() {
+    const {id} = useParams();
     const [userPosts, setUserPosts] = useState([]);
     const { User, setUser } = useContext(userContext);
     const cleanedUserId = User?.replace(/"/g, '');
@@ -34,7 +35,7 @@ function Profile() {
         async function getUser() {
             try {
                 setIsLoading(true);
-                const response = await axios.get(`http://localhost:4000/api/user/${cleanedUserId}`);
+                const response = await axios.get(`http://localhost:4000/api/user/${id}`);
                 setIsLoading(false)
                 setUserData(response.data);
 
@@ -43,8 +44,8 @@ function Profile() {
                 console.log(error)
             }
         }
-        if (cleanedUserId) getUser();
-    }, []);
+        if (id) getUser();
+    }, [id]);
 
 
     useEffect(() => {
@@ -69,8 +70,8 @@ function Profile() {
 
             }
         };
-        if (cleanedUserId) { getUserPosts(cleanedUserId); }
-    }, [cleanedUserId])
+        if (id) { getUserPosts(id); }
+    }, [id])
 
     useEffect(() => {
         if (isEditClicked) {
@@ -129,14 +130,14 @@ function Profile() {
                             </div>
 
                             {/* switch tabs */}
-                            <CenteredTabs value={value} setValue={setValue} />
+                            <CenteredTabs id={id} User={User} value={value} setValue={setValue} />
 
 
                             {/* posts */}
                             <div className='flex flex-col items-center gap-2 w-full max-w-[500px] border-t-2'>
                                 { value===0 &&  <Posts userPosts={userPosts} /> }
                                 { value===1 &&  <Adoptions /> }
-                                { value===2 &&  <Wishlists /> }
+                                {User===id  && ( value===2 &&  <Wishlists id={id}  />) }
                             </div>
                         </div>
                     </div>

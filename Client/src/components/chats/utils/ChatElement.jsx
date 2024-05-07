@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Avatar from '../Avatar'
 import { userContext } from '../../../context/UserContextProvider'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentChat } from '../../../redux/slices/chatSlice'
 
-const ChatElement = ({participants,chat}) => {
+const ChatElement = ({participants,chat,_id}) => {
     const dispatch = useDispatch();
+    const {currentChat} = useSelector(state=>state.chat)
     const [oppenentUser, setOppenentUser] = useState({});
 
     const { User } = useContext(userContext);
@@ -25,7 +26,7 @@ const ChatElement = ({participants,chat}) => {
     }
 
     return (
-        <div className='flex items-center bg-white justify-between py-2 ' onClick={handleClickOnChat}>
+        <div className={`${currentChat._id === _id ?" bg-gray-500 text-white":"bg-white"} cursor-pointer flex items-center justify-between py-2`}  onClick={handleClickOnChat}>
             <div className='flex gap-2'>
                 <Avatar profileImage={oppenentUser?.profileImage} />
                 <div className='flex flex-col'>

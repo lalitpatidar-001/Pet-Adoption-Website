@@ -2,17 +2,20 @@ import React, { useContext, useEffect, useState } from 'react'
 import Pet from '../Pet'
 import axios from 'axios'
 import { userContext } from '../../context/UserContextProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAllWishlists } from '../../redux/slices/wishlistSlice';
 
 const Wishlists = () => {
   const { User } = useContext(userContext);
-  const [wishlist , setWishlists] = useState([]);
+  const {wishlists} = useSelector(state=>state.wishlist);
+  const dispatch = useDispatch();
   useEffect(()=>{
     async function getWishlist (){
       try{
         const response = await axios.get(`http://localhost:4000/api/user/wishlists/${User}`)
         console.log(response)
         console.log(response.data.data);
-        setWishlists(response.data.data)
+        dispatch(addAllWishlists({data:response.data.data}))
       }catch(error){
         console.log(error)
       }
@@ -22,8 +25,8 @@ const Wishlists = () => {
   return (
       <>
 
-        {wishlist &&
-          wishlist.map((post) => {
+        {wishlists &&
+          wishlists.map((post) => {
             return <Pet key={post._id} {...post?.post} userId={post?.owner} />
           })
         }

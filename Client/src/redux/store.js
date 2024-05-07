@@ -6,6 +6,7 @@ import requestReducer from "./slices/requestSlice";
 import applicantReducer from "./slices/applicantSlice";
 import chatReducer from "./slices/chatSlice";
 import messageReducer from "./slices/messageSlice";
+import wishlistReducer from "./slices/wishlistSlice";
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     request: requestReducer,
     applicant: applicantReducer,
     chat: chatReducer,
-    message: messageReducer
+    message: messageReducer,
+    wishlist:wishlistReducer
 });
 
 const persistConfig = {

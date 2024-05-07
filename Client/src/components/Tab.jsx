@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-export default function CenteredTabs({value, setValue}) {
+export default function CenteredTabs({id,User,value, setValue}) {
   
 
   const handleChange = (event, newValue) => {
@@ -15,7 +15,7 @@ export default function CenteredTabs({value, setValue}) {
       <Tabs value={value} onChange={handleChange} centered>
         <Tab label="Posts" />
         <Tab label="Adoptions" />
-        <Tab label="Wishlist" />
+      {User===id &&  <Tab label="Wishlist" />}
       </Tabs>
     </Box>
   );

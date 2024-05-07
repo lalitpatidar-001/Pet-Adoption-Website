@@ -97,13 +97,12 @@ const getWishlist = async (req, res) => {
     }
 };
 
-// Assuming you have defined the getWishlist function as part of your API route handling
-
 
 module.exports = {
     getUser,
     updateProfile,
     getAllAdoption,
-    getWishlist
+    getWishlist,
+    
     
 }

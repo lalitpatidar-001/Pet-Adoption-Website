@@ -14,7 +14,7 @@ const updateLike = async (req, res) => {
         if (!isLike) {
             const updatedPost = await Post.findByIdAndUpdate(postId, { $push: { likes: id } }, { new: true });
             isLike=true;
-            return res.status(200).json({ msg: "Post liked successfully" ,isLike});
+            return res.status(201).json({ msg: "Post liked successfully" ,isLike});
         } else {
             const updatedPost = await Post.findByIdAndUpdate(postId, { $pull: { likes: id } }, { new: true });
             isLike=false;

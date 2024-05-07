@@ -26,7 +26,7 @@ const ChatContainer = () => {
         <div className='flex flex-col gap-[1px]  pl-[1px] overflow-y-scroll h-[calc(100vh-65px)]'>
             {
                 chats?.map((chat) => (
-                    <ChatElement chat={chat} key={chat._id} {...chat} />
+                    <ChatElement  chat={chat} key={chat._id} {...chat} />
                 ))
             }
         </div>
