@@ -18,7 +18,7 @@ const messageRouter = require('./routers/message');
 
 // middlewares
 app.use(cors({
-  origin:"https://pet-adoption-website-3j89.vercel.app/"
+  origin:["http://localhost:5173","https://pet-adoption-website-3j89.vercel.app/"]
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -38,10 +38,9 @@ app.use("/api/message", messageRouter);
 const server = new http.createServer(app)
 
 // socket config
-const origin =  process.env.NODE_ENV==="Developement"?"loca":"https://pet-adoption-website-3j89.vercel.app/"
 const io = new Server(server, {
     cors: {
-        origin:process.env.NODE_ENV==="Developement"?"http://localhost:5173":"https://pet-adoption-website-3j89.vercel.app/",
+        origin:["http://localhost:5173","https://pet-adoption-website-3j89.vercel.app/"],
         methods: ["GET", "POST"],
     }
 })
