@@ -18,6 +18,7 @@ function Pets({ isCreateOpened, setIsCreateOpened }) {
         setIsLoading(true);
         const response = await axiosInstance.get("/pet/all");
         setIsLoading(false);
+        console.log("response is generating")
         dispatch(addAllPets({data:response.data}))
         console.log("response" ,response.data)
       }

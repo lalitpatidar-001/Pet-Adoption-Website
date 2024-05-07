@@ -54,7 +54,7 @@ function Filters({onFilterChange , setIsPostLoading}) {
         //   const response = await axiosInstance.post('/post/getfilteredposts', updatedFilterParams);
 
         //   onFilterChange(response.data);
-        console.log("filter response ",response.data);
+        // console.log("filter response ",response.data);
         } catch (error) {
           console.log(error);
         }
