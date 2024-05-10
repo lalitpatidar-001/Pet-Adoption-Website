@@ -18,7 +18,8 @@ const messageRouter = require('./routers/message');
 
 // middlewares
 app.use(cors({
-  origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app"]
+  origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app"],
+  methods: ["GET", "POST","PUT","DELETE"],
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
