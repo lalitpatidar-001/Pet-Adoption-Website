@@ -7,7 +7,7 @@ const registeration = async (req, res) => {
         const user = req.body;
         try {
                 const userExists = await User.findOne({ username: req.body.username });
-                if (userExists) return res.status(401).json("username already exists");
+                if (userExists) return res.status(401).json("username already exists, choose new ");
                 const emailExists = await User.findOne({ email: req.body.email });
                 if (emailExists) return res.status(401).json("email already exists");
 
