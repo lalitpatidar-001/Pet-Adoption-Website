@@ -16,9 +16,23 @@ const adoptionRequestRouter = require('./routers/adoptionRequest');
 const chatRouter = require('./routers/chat');
 const messageRouter = require('./routers/message');
 
+app.use((req, res, next) => {
+  const origin = req.get('referer');
+  const isWhitelisted = whitelist.find((w) => origin && origin.includes(w));
+  if (isWhitelisted) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+  }
+  // Pass to next layer of middleware
+  if (req.method === 'OPTIONS') res.sendStatus(200);
+  else next();
+});
+
 // middlewares
 app.use(cors({
-  origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app","*"],
+  origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app", "*"],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -43,9 +57,9 @@ const server = new http.createServer(app)
 // socket config
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app","*"],
+    origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app", "*"],
     methods: ["GET", "POST"],
-    credentials:true,  
+    credentials: true,
   }
 })
 
