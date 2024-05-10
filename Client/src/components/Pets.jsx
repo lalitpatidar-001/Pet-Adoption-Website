@@ -34,7 +34,7 @@ function Pets({ isCreateOpened, setIsCreateOpened }) {
 
   return (
     <>
-      <div className=' flex flex-[5] flex-col gap-10  items-center   gap-y-[5px] flex-wrap relative  '>
+      <div className=' flex flex-[5] flex-col gap-10 outline-nond items-center   gap-y-[5px] flex-wrap relative  '>
       
 
        {
