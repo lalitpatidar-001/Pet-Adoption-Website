@@ -27,7 +27,7 @@ function Registration() {
         setIsLoading(true);
 
         try {
-            const response = await axiosInstance.post('/auth/register', userData);
+            const response = await axiosInstance.post('/auth/register/', userData);
             setIsLoading(false);
             console.log(response.data);
             if (response.status === 201) {
