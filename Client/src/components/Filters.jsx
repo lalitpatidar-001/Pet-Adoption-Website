@@ -50,11 +50,11 @@ function Filters({onFilterChange , setIsPostLoading}) {
                 isNoFeeChecked,
               };
           console.log(updatedFilterParams)
-          setIsPostLoading(true)
-          const response = await axiosInstance.post('/post/getfilteredposts', updatedFilterParams);
+        //   setIsPostLoading(true)
+        //   const response = await axiosInstance.post('/post/getfilteredposts', updatedFilterParams);
 
-          onFilterChange(response.data);
-        console.log("filter response ",response.data);
+        //   onFilterChange(response.data);
+        // console.log("filter response ",response.data);
         } catch (error) {
           console.log(error);
         }
