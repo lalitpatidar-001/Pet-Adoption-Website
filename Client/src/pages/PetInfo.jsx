@@ -22,7 +22,7 @@ function PetInfo() {
     const [postData, setPostData] = useState({});
 
     const imageAddress = postData.image?.replace(/\\/g, '/');
-    const imageURL = `${STATIC_PATH+imageAddress}`;
+    const imageURL = `${STATIC_PATH + imageAddress}`;
 
     console.log("isAlreadyRequested", isAlreadyRequested)
     console.log("isAlreadyRequested", isAlreadyRequested)
@@ -141,7 +141,7 @@ function PetInfo() {
                         {
 
                             <div className='flex gap-[10px] '>
-                              {  User!==postData.userId && <>
+                                {User !== postData.userId && <>
                                     {!isAlreadyRequested ? <button className='bg-[#007BE5] rounded px-2 text-white font-semibold flex-1 '
                                         onClick={handleRequestSendClick}
                                     >

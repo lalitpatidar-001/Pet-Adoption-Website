@@ -8,7 +8,7 @@ import { addAllPets } from '../redux/slices/petSlice';
 import axiosInstance from '../axios';
 
 function Pets({ isCreateOpened, setIsCreateOpened }) {
-  const {pets} = useSelector(state=>state.pet);
+  const { pets } = useSelector(state => state.pet);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,18 +16,18 @@ function Pets({ isCreateOpened, setIsCreateOpened }) {
     async function getAllpet() {
       try {
         setIsLoading(true);
-        const response = await axiosInstance.get("/pet/all");
+        const response = await axiosInstance.get("/post/all");
         setIsLoading(false);
         console.log("response is generating")
-        dispatch(addAllPets({data:response.data}))
-        console.log("response" ,response.data)
+        dispatch(addAllPets({ data: response.data }))
+        console.log("response", response.data)
       }
       catch (error) {
-          console.log(error)
+        console.log(error)
       }
     }
     getAllpet();
-  },[]);
+  }, []);
 
 
   console.log("rendering pets")
@@ -35,13 +35,13 @@ function Pets({ isCreateOpened, setIsCreateOpened }) {
   return (
     <>
       <div className=' flex flex-[5] flex-col gap-10  items-center   gap-y-[5px] flex-wrap relative  '>
-      
 
-       {
-        pets?.length > 0 && pets?.map((pet)=>{
-         return  <Pet {...pet} key={pet._id}/>
-        })
-       }
+
+        {
+          pets && pets?.map((pet) => {
+            return <Pet {...pet} key={pet._id} />
+          })
+        }
       </div>
     </>
   )

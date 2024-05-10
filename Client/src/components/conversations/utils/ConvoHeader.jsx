@@ -1,27 +1,27 @@
 import React, { useContext, useEffect } from 'react'
 import Avatar from '../../chats/Avatar'
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { userContext } from '../../../context/UserContextProvider';
 import { setToUser } from '../../../redux/slices/messageSlice';
 const ConvoHeader = () => {
-    const {toUser} = useSelector(state=>state.message);
-//     const {User} = useContext(userContext)
-//     const {currentChat} = useSelector(state=>state.chat);
-//     const dispatch = useDispatch();
-  
-//     const getToUser = (members) => {
-//       const oppenentUserData = members?.filter((member) => User !== member._id);
-//       return oppenentUserData
-//   }
-  
-//     useEffect(()=>{
-//         console.log("currentChat",currentChat)
-//       if(currentChat){
-//         console.log("called ")
-//         const toUserdata = getToUser(currentChat.participants);
-//         dispatch(setToUser({data:toUserdata[0]}))
-//       }
-//     },[currentChat,toUser])
+    const { toUser } = useSelector(state => state.message);
+    //     const {User} = useContext(userContext)
+    //     const {currentChat} = useSelector(state=>state.chat);
+    //     const dispatch = useDispatch();
+
+    //     const getToUser = (members) => {
+    //       const oppenentUserData = members?.filter((member) => User !== member._id);
+    //       return oppenentUserData
+    //   }
+
+    //     useEffect(()=>{
+    //         console.log("currentChat",currentChat)
+    //       if(currentChat){
+    //         console.log("called ")
+    //         const toUserdata = getToUser(currentChat.participants);
+    //         dispatch(setToUser({data:toUserdata[0]}))
+    //       }
+    //     },[currentChat,toUser])
 
 
 

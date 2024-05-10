@@ -19,7 +19,7 @@ import axiosInstance, { STATIC_PATH } from '../axios';
 const dumyUrl = "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600";
 
 function Profile() {
-    const {id} = useParams();
+    const { id } = useParams();
     const [userPosts, setUserPosts] = useState([]);
     const { User, setUser } = useContext(userContext);
     const cleanedUserId = User?.replace(/"/g, '');
@@ -52,7 +52,7 @@ function Profile() {
     useEffect(() => {
         setProfileImageURL(() => {
             const imageAddress = userData.profileImage?.replace(/\\/g, '/');
-            const imageUrl = `${STATIC_PATH+imageAddress}`;
+            const imageUrl = `${STATIC_PATH + imageAddress}`;
             console.log("profileImageURL", profileImageURL);
             console.log("userData", userData);
             return imageUrl
@@ -136,9 +136,9 @@ function Profile() {
 
                             {/* posts */}
                             <div className='flex flex-col items-center gap-2 w-full max-w-[500px] border-t-2'>
-                                { value===0 &&  <Posts userPosts={userPosts} /> }
-                                { value===1 &&  <Adoptions /> }
-                                {User===id  && ( value===2 &&  <Wishlists id={id}  />) }
+                                {value === 0 && <Posts userPosts={userPosts} />}
+                                {value === 1 && <Adoptions />}
+                                {User === id && (value === 2 && <Wishlists id={id} />)}
                             </div>
                         </div>
                     </div>

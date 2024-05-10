@@ -59,8 +59,8 @@ const Messages = () => {
             {
                 messages?.map((message) => (
                     <>
-                        {message.type==="Text" && <TextMessage scrollRef={scrollRef} User={User} {...message} />}
-                        {message.type==="Image" && <ImageMessage scrollRef={scrollRef} User={User} {...message} />}
+                        {message.type === "Text" && <TextMessage scrollRef={scrollRef} User={User} {...message} />}
+                        {message.type === "Image" && <ImageMessage scrollRef={scrollRef} User={User} {...message} />}
                     </>
                 ))
             }

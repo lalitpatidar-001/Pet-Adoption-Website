@@ -32,7 +32,7 @@ const Applicant = () => {
             <div className='flex-[6] flex flex-col gap-1 bg-[#dddddd] p-2'>
                 {
                     applicants?.map((applicant) => (
-                        <ApplicantCard key={applicant._id} {...applicant}/>
+                        <ApplicantCard key={applicant._id} {...applicant} />
                     ))
                 }
             </div>

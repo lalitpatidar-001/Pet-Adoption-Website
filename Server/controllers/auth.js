@@ -27,24 +27,24 @@ const registeration = async (req, res) => {
 }
 
 
-const login = async(req,res)=>{
+const login = async (req, res) => {
         const user = req.body;
-        try{
-                const userExists = await User.findOne({username:req.body.username});
-                if(!userExists) return res.status(404).json({msg:"wrong username"});
+        try {
+                const userExists = await User.findOne({ username: req.body.username });
+                if (!userExists) return res.status(404).json({ msg: "wrong username" });
 
-                bcrypt.compare(req.body.password, userExists.password, function(err, resp) {
-                        const {password,...others} = userExists;
+                bcrypt.compare(req.body.password, userExists.password, function (err, resp) {
+                        const { password, ...others } = userExists;
                         const sendData = others._doc;
-                        if(resp === true) return res.status(200).json({msg:"authentic user",sendData});
-                        else{
-                                return res.status(401).json({msg:"wrong password"})
+                        if (resp === true) return res.status(200).json({ msg: "authentic user", sendData });
+                        else {
+                                return res.status(401).json({ msg: "wrong password" })
                         }
-                    });
+                });
 
-        }catch(error){
+        } catch (error) {
                 res.status(500).json("something went wrong on server");
-                console.log("error " ,error);
+                console.log("error ", error);
         }
 }
 
