@@ -16,7 +16,7 @@ function Pets({ isCreateOpened, setIsCreateOpened }) {
     async function getAllpet() {
       try {
         setIsLoading(true);
-        const response = await axiosInstance.get("/pet/all");
+        const response = await axiosInstance.get("/post/all");
         setIsLoading(false);
         console.log("response is generating")
         dispatch(addAllPets({data:response.data}))
@@ -38,7 +38,7 @@ function Pets({ isCreateOpened, setIsCreateOpened }) {
       
 
        {
-        pets?.length > 0 && pets?.map((pet)=>{
+        pets  && pets?.map((pet)=>{
          return  <Pet {...pet} key={pet._id}/>
         })
        }
