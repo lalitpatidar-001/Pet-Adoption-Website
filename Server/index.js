@@ -20,7 +20,7 @@ const messageRouter = require('./routers/message');
 
 // middlewares
 app.use(cors({
-  origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app","*"],
+  origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app"],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
