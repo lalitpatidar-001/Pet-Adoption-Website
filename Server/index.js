@@ -18,7 +18,7 @@ const messageRouter = require('./routers/message');
 
 // middlewares
 app.use(cors({
-  origin:["http://localhost:5173","https://pet-adoption-website-mvdc.vercel.app"]
+  origin: ["http://localhost:5173", "https://pet-adoption-website-mvdc.vercel.app"]
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -39,18 +39,18 @@ const server = new http.createServer(app)
 
 // socket config
 const io = new Server(server, {
-    cors: {
-        origin:["http://localhost:5173","https://pet-adoption-website-mvdc.vercel.app"],
-        methods: ["GET", "POST"],
-    }
+  cors: {
+    origin: ["http://localhost:5173", "https://pet-adoption-website-mvdc.vercel.app"],
+    methods: ["GET", "POST"],
+  }
 })
 
 
 
 // DB config
 mongoose.connect(process.env.DB_URL)
-    .then(() => console.log("DB Connected."))
-    .catch(error => console.log("db error", error));
+  .then(() => console.log("DB Connected."))
+  .catch(error => console.log("db error", error));
 
 // Initialize an empty onlineUsers object
 const onlineUsers = {};
@@ -76,31 +76,31 @@ function removeUser(key) {
 }
 
 // socket event listners
-io.on("connection" , (socket)=>{
-    console.log("user connected");
-    console.log("socket Id ",socket.id)
-    const user_id = (socket.handshake.query["user_id"]); // connected user's id
+io.on("connection", (socket) => {
+  console.log("user connected");
+  console.log("socket Id ", socket.id)
+  const user_id = (socket.handshake.query["user_id"]); // connected user's id
 
-    if(Boolean(user_id)){
-        putUser(user_id,socket.id);
+  if (Boolean(user_id)) {
+    putUser(user_id, socket.id);
+  }
+  console.log(onlineUsers);
+
+  socket.on("sent_new_message", (data) => {
+    console.log("message", data);
+    const { to, from } = data;
+    console.log("to", to)
+    const to_user_socketId = getUser(to);
+    console.log(to_user_socketId)
+    if (to_user_socketId) {
+      console.log("called")
+      io.to(to_user_socketId).emit("new_message_arrived", data);
     }
-    console.log(onlineUsers);
+  })
 
-    socket.on("sent_new_message",(data)=>{
-      console.log("message",data);
-      const {to , from} = data;
-      console.log("to",to)
-      const to_user_socketId = getUser(to);
-      console.log(to_user_socketId)
-      if(to_user_socketId){
-        console.log("called")
-        io.to(to_user_socketId).emit("new_message_arrived",data);
-      }
-    })
-    
 })
 
 // server config
 server.listen(process.env.PORT, () => {
-    console.log("servetr is running...")
+  console.log("servetr is running...")
 })

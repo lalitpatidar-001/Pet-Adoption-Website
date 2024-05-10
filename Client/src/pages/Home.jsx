@@ -21,7 +21,7 @@ function Home() {
     if (!socket) {
       connectSocket(User)
     }
-  }, [User,socket])
+  }, [User, socket])
 
   const handleFilterChange = (filteredPosts) => {
     dispatch(addAllPets({ data: filteredPosts }))

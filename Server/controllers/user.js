@@ -54,8 +54,8 @@ const getAllAdoption = async (req, res) => {
     const { userId } = req.params;
 
     try {
-        const adoptions = await AdpotionRequest.find({requester:userId , status:"adopted"}).select("pet owner").populate("owner pet");
-        return res.status(200).json({message:"all adoptions retrieved",data:adoptions})
+        const adoptions = await AdpotionRequest.find({ requester: userId, status: "adopted" }).select("pet owner").populate("owner pet");
+        return res.status(200).json({ message: "all adoptions retrieved", data: adoptions })
     } catch (error) {
         console.error(error);
         return res.status(500).json({ msg: "Internal Server Error" });
@@ -79,7 +79,7 @@ const getWishlist = async (req, res) => {
                 const owner = await User.findById(userId);
 
                 const obj = {
-                   post, // Convert Mongoose document to plain object
+                    post, // Convert Mongoose document to plain object
                     owner
                 };
 
@@ -103,6 +103,6 @@ module.exports = {
     updateProfile,
     getAllAdoption,
     getWishlist,
-    
-    
+
+
 }

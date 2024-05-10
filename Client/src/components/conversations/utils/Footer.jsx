@@ -17,7 +17,7 @@ const Footer = () => {
     const dispatch = useDispatch();
     const { currentChat } = useSelector(state => state.chat);
     const { toUser } = useSelector(state => state.message);
-    
+
 
 
     const handleChangeImageMessageInput = (e) => {
@@ -80,7 +80,7 @@ const Footer = () => {
     }
     return (
         <div className=' bg-white flex gap-3 items-center py-2 p-2 w-full relative '>
-            {imageMessage && <ImagePreview setImageMessage={setImageMessage}  image={imageMessage}/>}
+            {imageMessage && <ImagePreview setImageMessage={setImageMessage} image={imageMessage} />}
             <input className='hidden' id="image-input" name="messageImage" onChange={handleChangeImageMessageInput} type='file' />
             <label htmlFor='image-input' className="text-gray-700 cursor-pointer">
                 <StyleRoundedIcon />

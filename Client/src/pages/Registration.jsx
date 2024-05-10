@@ -30,10 +30,10 @@ function Registration() {
             const response = await axiosInstance.post('/auth/register', userData);
             setIsLoading(false);
             console.log(response.data);
-           if(response.status === 201){
-             window.alert("User Registered Successfully");
-             navigate("/login");
-           }
+            if (response.status === 201) {
+                window.alert("User Registered Successfully");
+                navigate("/login");
+            }
 
         }
         catch (error) {

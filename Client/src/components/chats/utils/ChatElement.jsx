@@ -4,9 +4,9 @@ import { userContext } from '../../../context/UserContextProvider'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentChat } from '../../../redux/slices/chatSlice'
 
-const ChatElement = ({participants,chat,_id}) => {
+const ChatElement = ({ participants, chat, _id }) => {
     const dispatch = useDispatch();
-    const {currentChat} = useSelector(state=>state.chat)
+    const { currentChat } = useSelector(state => state.chat)
     const [oppenentUser, setOppenentUser] = useState({});
 
     const { User } = useContext(userContext);
@@ -15,18 +15,18 @@ const ChatElement = ({participants,chat,_id}) => {
         return oppenentUserData
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setOppenentUser(getOpponentUser(participants)[0]);
-        console.log("oppenentUser",oppenentUser)
-    },[participants,User])
+        console.log("oppenentUser", oppenentUser)
+    }, [participants, User])
 
-    const handleClickOnChat = ()=>{
-        console.log("called chat changed",chat);
-        dispatch(setCurrentChat({data:chat}))
+    const handleClickOnChat = () => {
+        console.log("called chat changed", chat);
+        dispatch(setCurrentChat({ data: chat }))
     }
 
     return (
-        <div className={`${currentChat._id === _id ?" bg-gray-500 text-white":"bg-white"} cursor-pointer flex items-center justify-between py-2`}  onClick={handleClickOnChat}>
+        <div className={`${currentChat._id === _id ? " bg-gray-500 text-white" : "bg-white"} cursor-pointer flex items-center justify-between py-2`} onClick={handleClickOnChat}>
             <div className='flex gap-2'>
                 <Avatar profileImage={oppenentUser?.profileImage} />
                 <div className='flex flex-col'>

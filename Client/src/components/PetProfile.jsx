@@ -6,24 +6,24 @@ import { Link } from 'react-router-dom';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
 
-function PetProfile({props}) {
+function PetProfile({ props }) {
     return (
         // wrapper
 
         <Link to="/pet/1">
             <div className='w-[70%] p-2   shadow-lg bg-white  border-1 border-[#bfbdbd]'>
 
-            {/* user details */}
-            <div className='flex  p-2 justify-between items-center'>
-                <div className='flex gap-2'>
-                <img className='w-[50px] rounded-[50%]' src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-                <h1 className='py-2
+                {/* user details */}
+                <div className='flex  p-2 justify-between items-center'>
+                    <div className='flex gap-2'>
+                        <img className='w-[50px] rounded-[50%]' src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+                        <h1 className='py-2
                 font-semibold text-xl'>lalitpatidar-001</h1>
+                    </div>
+                    <div>
+                        <MoreHorizIcon />
+                    </div>
                 </div>
-                <div>
-                    <MoreHorizIcon/>
-                </div>
-            </div>
 
                 <img className='w-[100%] h-[px]' src="https://images.pexels.com/photos/1490908/pexels-photo-1490908.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="dogs-images" />
 
@@ -40,7 +40,7 @@ function PetProfile({props}) {
                     </div>
                     {/* actions */}
                     <div className='flex justify-between p-1 ]'>
-                        
+
                         <div className='flex  gap-[10px] w-[100%]'>
                             <FavoriteBorderIcon className='self-start' />
                             <BookmarkBorderIcon />
