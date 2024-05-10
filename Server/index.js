@@ -45,7 +45,7 @@ const server = new http.createServer(app)
 // socket config
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app","*"],
+    origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app","*hey"],
     methods: ["GET", "POST"],
     credentials:true,  
   }
