@@ -37,10 +37,9 @@ app.use((req, res, next) => {
 
 // middlewares
 app.use(cors({
-  origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app"],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204,
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -62,7 +61,7 @@ const server = new http.createServer(app)
 // socket config
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "https://pet-adoption-website-lac.vercel.app","*hey"],
+    origin: "*",
     methods: ["GET", "POST"],
     credentials:true,  
   }
