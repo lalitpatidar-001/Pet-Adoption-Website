@@ -57,7 +57,7 @@ app.use("/api/message", messageRouter);
 
 // create socket server 
 const server = new http.createServer(app)
-const url = process.env.ENVIRONMENT ==="Devevlopment" ?"http://localhost:5173":""
+const url = process.env.ENVIRONMENT ==="Devevlopment" ?"http://localhost:5173":"https://pet-adoption-website-lac.vercel.app"
 // socket config
 const io = new Server(server, {
   cors: {
