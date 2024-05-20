@@ -16,28 +16,28 @@ const adoptionRequestRouter = require('./routers/adoptionRequest');
 const chatRouter = require('./routers/chat');
 const messageRouter = require('./routers/message');
 
-const whitelist = [
-  '*'
-];
+// const whitelist = [
+//   '*'
+// ];
 
-app.use((req, res, next) => {
-  const origin = req.get('referer');
-  const isWhitelisted = whitelist.find((w) => origin && origin.includes(w));
-  if (isWhitelisted) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-  }
-  // Pass to next layer of middleware
-  if (req.method === 'OPTIONS') res.sendStatus(200);
-  else next();
-});
+// app.use((req, res, next) => {
+//   const origin = req.get('referer');
+//   const isWhitelisted = whitelist.find((w) => origin && origin.includes(w));
+//   if (isWhitelisted) {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//   }
+//   // Pass to next layer of middleware
+//   if (req.method === 'OPTIONS') res.sendStatus(200);
+//   else next();
+// });
 
 
 // middlewares
 app.use(cors({
-  origin:'*', 
+  origin:'http://localhost:5173', 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200,
 }));
@@ -57,11 +57,11 @@ app.use("/api/message", messageRouter);
 
 // create socket server 
 const server = new http.createServer(app)
-
+const url = process.env.ENVIRONMENT ==="Devevlopment" ?"http://localhost:5173":""
 // socket config
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: url,
     methods: ["GET", "POST"],
     credentials:true,  
   }
