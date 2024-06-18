@@ -7,48 +7,40 @@ const path = require('path');
 const http = require("http");
 const { Server } = require("socket.io");
 
-
 // router imports
-const auhtRouter = require('./routers/auth');
+const authRouter = require('./routers/auth');
 const postRouter = require('./routers/post');
 const userRouter = require('./routers/user');
 const adoptionRequestRouter = require('./routers/adoptionRequest');
 const chatRouter = require('./routers/chat');
 const messageRouter = require('./routers/message');
 
-// const whitelist = [
-//   '*'
-// ];
-
-// app.use((req, res, next) => {
-//   const origin = req.get('referer');
-//   const isWhitelisted = whitelist.find((w) => origin && origin.includes(w));
-//   if (isWhitelisted) {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//   }
-//   // Pass to next layer of middleware
-//   if (req.method === 'OPTIONS') res.sendStatus(200);
-//   else next();
-// });
-
-
-// middlewares
-const myurl = process.env.ENVIRONMENT ==="Development" ?"http://localhost:5173":"https://pet-adoption-website-lac.vercel.app"
+const myurl = process.env.ENVIRONMENT === "Development" ? "http://localhost:5173" : "https://pet-adoption-website-lac.vercel.app";
 app.use(cors({
-  origin:myurl, 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200,
+  origin: "https://pet-adoption-website-lac.vercel.app",
+  credentials: true,
+  optionsSuccessStatus: 200,
 }));
+
+// create socket server 
+const server = new http.createServer(app);
+const url = process.env.ENVIRONMENT === "Development" ? "http://localhost:5173" : "https://pet-adoption-website-lac.vercel.app";
+// socket config
+const io = new Server(server, {
+  cors: {
+    origin: "https://pet-adoption-website-lac.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true,
+  }
+});
+
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/profiles', express.static(path.join(__dirname, 'profiles')));
 app.use('/messageImages', express.static(path.join(__dirname, 'messageImages')));
 
 // routers
-app.use("/api/auth", auhtRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 app.use("/api/user", userRouter);
 app.use("/api/adoption-request", adoptionRequestRouter);
@@ -56,24 +48,11 @@ app.use("/api/chat", chatRouter);
 app.use("/api/message", messageRouter);
 
 
-// create socket server 
-const server = new http.createServer(app)
-const url = process.env.ENVIRONMENT ==="Development" ?"http://localhost:5173":"https://pet-adoption-website-lac.vercel.app"
-// socket config
-const io = new Server(server, {
-  cors: {
-    origin: url,
-    methods: ["GET", "POST"],
-    credentials:true,  
-  }
-})
-
-
 
 // DB config
 mongoose.connect(process.env.DB_URL)
   .then(() => console.log("DB Connected."))
-  .catch(error => console.log("db error", error));
+  .catch(error => console.log("DB error", error));
 
 // Initialize an empty onlineUsers object
 const onlineUsers = {};
@@ -98,7 +77,7 @@ function removeUser(key) {
   }
 }
 
-// socket event listners
+// socket event listeners
 io.on("connection", (socket) => {
   console.log("user connected");
   console.log("socket Id ", socket.id)
@@ -119,11 +98,21 @@ io.on("connection", (socket) => {
       console.log("called")
       io.to(to_user_socketId).emit("new_message_arrived", data);
     }
-  })
+  });
 
-})
+  socket.on("disconnect", () => {
+    console.log("user disconnected", socket.id);
+    // Assuming you store user_id in socket object
+    const user_id = Object.keys(onlineUsers).find(key => onlineUsers[key] === socket.id);
+    if (user_id) {
+      removeUser(user_id);
+    }
+    console.log(onlineUsers);
+  });
+
+});
 
 // server config
 server.listen(process.env.PORT, () => {
-  console.log("servetr is running...")
-})
+  console.log("Server is running on port", process.env.PORT);
+});
