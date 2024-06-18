@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "app/server.js"
+      "destination": "/index.js"
     }
   ],
   "headers": [
