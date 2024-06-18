@@ -22,7 +22,7 @@ function Login() {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await fetch(`${urlPath}/auth/login`, {
+            const response = await fetch(`/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
