@@ -12,7 +12,6 @@ const getUser = async (req, res) => {
         res.status(500).json("something went wrong on server");
         console.log(error);
     }
-
 };
 
 // update profile

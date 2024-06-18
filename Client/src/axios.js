@@ -9,6 +9,7 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  credentials: true
 });
 
 export const STATIC_PATH = urlPath+"/"

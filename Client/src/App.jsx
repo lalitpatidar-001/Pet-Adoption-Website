@@ -35,6 +35,13 @@ function App() {
         <Route path="/chat/:id" element={<PrivateRoute element={<Chat/>} />} />
         <Route path="/donate" element={<PrivateRoute element={<DonateUs/>} />} />
       </Routes>
+
+
+
+
+      
+
+
     </Router>
   );
 }

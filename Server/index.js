@@ -36,8 +36,9 @@ const messageRouter = require('./routers/message');
 
 
 // middlewares
+const myurl = process.env.ENVIRONMENT ==="Development" ?"http://localhost:5173":"https://pet-adoption-website-lac.vercel.app"
 app.use(cors({
-  origin:'http://localhost:5173', 
+  origin:myurl, 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200,
 }));
@@ -57,7 +58,7 @@ app.use("/api/message", messageRouter);
 
 // create socket server 
 const server = new http.createServer(app)
-const url = process.env.ENVIRONMENT ==="Devevlopment" ?"http://localhost:5173":"https://pet-adoption-website-lac.vercel.app"
+const url = process.env.ENVIRONMENT ==="Development" ?"http://localhost:5173":"https://pet-adoption-website-lac.vercel.app"
 // socket config
 const io = new Server(server, {
   cors: {
