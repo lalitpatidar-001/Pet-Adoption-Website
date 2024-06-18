@@ -1,11 +1,39 @@
 {
-  "version":2,
-  "builds":[
-    {"src":"./index.js","use":"@vercel/node"}
-  ],
-  "routes":[
+  "version": 2,
+  "builds": [
     {
-      "src":"/(.*)", "dest":"/"
+      "src":"/index.js",
+      "use":"@vercel/node",
+      "config":{"includeFiles":["/**"]}
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://pet-adoption-website-lac.vercel.app"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        },
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        }
+      ]
     }
   ]
 }
