@@ -8,12 +8,12 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)", // Match all routes starting with /api/
-      "dest": "/Server/index.js" // Route to your backend entry point
+      "src": "/api/(.*)",
+      "dest": "/Server/index.js" 
     },
     {
-      "src": "/(.*)", // Match all other routes
-      "dest": "/Server/index.js" // Route to your backend entry point
+      "src": "/(.*)", 
+      "dest": "/Server/index.js" 
     }
   ],
   "headers": [
