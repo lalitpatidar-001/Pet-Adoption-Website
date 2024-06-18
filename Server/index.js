@@ -15,11 +15,17 @@ const adoptionRequestRouter = require('./routers/adoptionRequest');
 const chatRouter = require('./routers/chat');
 const messageRouter = require('./routers/message');
 
+// Middleware to log requests for debugging
+app.use((req, res, next) => {
+  console.log(`${req.method} request for '${req.url}'`);
+  next();
+});
+
 const myurl = process.env.ENVIRONMENT === "Development" ? "http://localhost:5173" : "https://pet-adoption-website-lac.vercel.app";
 app.use(cors({
   origin: "*",
-  credentials: true,
-  optionsSuccessStatus: 200,
+  // credentials: true,
+  // optionsSuccessStatus: 200,
 }));
 
 // create socket server 
@@ -30,7 +36,7 @@ const io = new Server(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
-    credentials: true,
+    // credentials: true,
   }
 });
 
