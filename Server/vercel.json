@@ -8,8 +8,8 @@
   ],
   "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.js" 
+      "source": "/(.*)",
+      "destination": "/index.js" 
     }
   ],
   "headers": [
