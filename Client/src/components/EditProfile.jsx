@@ -2,21 +2,22 @@ import React, { useContext, useState } from 'react';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { userContext } from '../context/UserContextProvider';
 import axios from 'axios';
-import axiosInstance from '../axios';
+import axiosInstance, { urlPath } from '../axios';
 
-function EditProfile({ isEditClicked, setIsEditClicked }) {
+const initialState ={
+    name: "",
+    username: "",
+    selectedGender: "",
+    address: "",
+    dob: "",
+}
+function EditProfile({ isEditClicked, setIsEditClicked,id }) {
+    console.log("iddd",id)
     const [isLoading, setIsLoading] = useState(false);
     const [profileImage, setprofileImage] = useState(null);
-    const [details, setDetails] = useState({
-        name: "",
-        username: "",
-        selectedGender: "",
-        address: "",
-        dob: "",
-    });
+    const [details, setDetails] = useState(initialState);
 
     const { User } = useContext(userContext);
-    const cleanedUserId = User.replace(/"/g, '');
 
     const handleProfileChangeSubmit = async (e) => {
         e.preventDefault();
@@ -31,17 +32,15 @@ function EditProfile({ isEditClicked, setIsEditClicked }) {
             formData.append('profileImage', profileImage);
             console.log(formData)
             setIsLoading(true)
-            const response = await axiosInstance.post(`/user/update?id=${cleanedUserId}`, formData);
+            const response = await axios.post(`${urlPath}/api/user/update?id=${id}`, formData,{
+                headers:{
+                    "Content-Type":"multipart/form-data"
+                }
+            });
             setIsLoading(false);
             // reseting data
             setprofileImage(null);
-            setDetails({
-                name: "",
-                username: "",
-                selectedGender: "",
-                address: "",
-                dob: "",
-            });
+            setDetails(initialState);
 
 
 

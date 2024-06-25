@@ -1,11 +1,15 @@
 const express = require('express');
-const app = express();
 const mongoose = require('mongoose');
-require("dotenv").config();
 const cors = require('cors');
 const path = require('path');
 const http = require("http");
 const { Server } = require("socket.io");
+const fs = require("fs");
+const passport = require("passport")
+const session = require('express-session');
+require("dotenv").config();
+require("./auth_config/passport")
+const app = express();
 
 // router imports
 const authRouter = require('./routers/auth');
@@ -20,21 +24,33 @@ app.use((req, res, next) => {
   console.log(`${req.method} request for '${req.url}'`);
   next();
 });
+app.use((req,res,next)=>{
+  res.header("Access-Control-Allow-Credentials",true);
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  next()
+})
 
-const myurl = process.env.ENVIRONMENT === "Development" ? "http://localhost:5173" : "https://pet-adoption-website-lac.vercel.app";
+app.use(session({
+  secret: process.env.SESSION_SECRET, // Replace with a random string used to sign the session ID cookie
+  resave: false,
+  saveUninitialized: false,
+}));
+
+
 app.use(cors({
-  origin: "*",
+  origin: "http://localhost:5173",
   // credentials: true,
   // optionsSuccessStatus: 200,
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
 // create socket server 
 const server = new http.createServer(app);
-const url = process.env.ENVIRONMENT === "Development" ? "http://localhost:5173" : "https://pet-adoption-website-lac.vercel.app";
 // socket config
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     // credentials: true,
   }
@@ -122,3 +138,12 @@ io.on("connection", (socket) => {
 server.listen(process.env.PORT, () => {
   console.log("Server is running on port", process.env.PORT);
 });
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import PetInfo from './pages/PetInfo';
@@ -20,7 +20,9 @@ function App() {
 
   const PrivateRoute = ({ element }) => {
     return User ? element : <Navigate to="/login" />;
+    // return element
   };
+
 
   return (
     <Router>

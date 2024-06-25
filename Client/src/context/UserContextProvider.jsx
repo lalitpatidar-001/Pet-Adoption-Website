@@ -4,15 +4,22 @@ export const userContext = createContext();
 
 function UserContextProvider({ children }) {
   const [User, setUser] = useState(() => {
-    // Use a function to initialize User from localStorage
-    return localStorage.getItem('user-data')?.replace(/"/g, '') || false;
+    const data = localStorage.getItem('user-data');
+    if(data){
+      return JSON.parse(data);
+    }
   });
 
-  useEffect(() => {
-    // Update localStorage when User changes
-    localStorage.setItem('user-data', JSON.stringify(User));
-  }, [User]);
+  // // Update localStorage when User changes
+  // useEffect(() => {
+  //   if (User) {
+  //     localStorage.setItem('user-data', JSON.stringify(User));
+  //   } else {
+  //     localStorage.removeItem('user-data');
+  //   }
+  // }, [User]);
 
+  //set new value if user value changes 
   const contextValue = useMemo(() => ({ User, setUser }), [User]);
 
   return (
@@ -23,3 +30,9 @@ function UserContextProvider({ children }) {
 }
 
 export default UserContextProvider;
+
+
+// useEffect(() => {
+  //   // Update localStorage when User changes
+  //   localStorage.setItem('user-data', JSON.stringify(User));
+  // }, [User]);

@@ -15,34 +15,44 @@ import Posts from '../components/profile/Posts';
 import Adoptions from '../components/profile/Adoptions';
 import Wishlists from '../components/profile/Wishlists';
 import axiosInstance, { STATIC_PATH } from '../axios';
-
+import {toast} from "react-hot-toast"
+import {useNavigate} from "react-router-dom";
 const dumyUrl = "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600";
 
 function Profile() {
     const { id } = useParams();
     const [userPosts, setUserPosts] = useState([]);
     const { User, setUser } = useContext(userContext);
-    const cleanedUserId = User?.replace(/"/g, '');
     const [userData, setUserData] = useState("");
     const [isEditClicked, setIsEditClicked] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [profileImageURL, setProfileImageURL] = useState(null);
     const [value, setValue] = useState(0);
+    const navigate = useNavigate();
 
-
-
-
+// get the user
     useEffect(() => {
         async function getUser() {
             try {
                 setIsLoading(true);
                 const response = await axiosInstance.get(`/user/${id}`);
+                console.log("user",response);
                 setIsLoading(false)
-                setUserData(response.data);
-
+               
+                if(response.status===200){
+                    setUserData(response.data);
+                }
             } catch (error) {
-                setIsLoading(false);
                 console.log(error)
+                if(error?.response?.data?.msg){
+                    toast.error(error?.response?.data?.msg);
+                    navigate("/");
+                }else{
+                    toast.error("Something went wrong , try again");
+
+                }
+            }finally{
+                setIsLoading(false);
             }
         }
         if (id) getUser();
@@ -50,12 +60,24 @@ function Profile() {
 
 
     useEffect(() => {
+        if(isLoading) return
         setProfileImageURL(() => {
-            const imageAddress = userData.profileImage?.replace(/\\/g, '/');
-            const imageUrl = `${STATIC_PATH + imageAddress}`;
-            console.log("profileImageURL", profileImageURL);
-            console.log("userData", userData);
-            return imageUrl
+            console.log("userData?.profileImage",userData?.profileImage)
+            if(!userData?.profileImage) return null
+
+            if(userData?.profileImage?.startsWith("profiles/")){ 
+                console.log("running")
+                const imageAddress = userData.profileImage
+                const imageUrl = `${STATIC_PATH + imageAddress}`;
+                console.log("profileImageURL", profileImageURL);
+                console.log("userData", userData);
+                return imageUrl
+            }
+           
+            console.log("running")
+            console.log(userData?.profileImage)
+            return null
+           
         })
     }, [userData])
 
@@ -104,7 +126,7 @@ function Profile() {
                     <SideBar page="profile" />
 
                     {isEditClicked && <>
-                        <EditProfile isEditClicked={isEditClicked} setIsEditClicked={setIsEditClicked} />
+                        <EditProfile isEditClicked={isEditClicked} setIsEditClicked={setIsEditClicked} id={id}/>
                     </>
                     }
 
@@ -115,12 +137,13 @@ function Profile() {
                             {/* profile */}
                             <div className='flex p-5 pl-5 lg:gap-[40px] justify-center ' >
 
-                                <img className='w-[100px] h-[100px] rounded-[50%]' src={userData.profileImage ? profileImageURL : dumyUrl} alt="profile-image" />
+                                <img className='w-[100px] h-[100px] rounded-[50%]' src={profileImageURL?
+                                    profileImageURL : dumyUrl} alt="profile-image" />
 
                                 <div className='px-4 py-2 flex flex-col'>
                                     <h1 className='text-xl font-semibold'>{userData.username}</h1>
                                     <span className='font-semibold'>{userPosts.length}post</span>
-                                    {userData._id === cleanedUserId &&
+                                    {userData._id === User &&
                                         <span onClick={() => setIsEditClicked(!isEditClicked)} className=' mt-2 font-bold rounded text-center cursor-pointer bg-[#dddddd]'>Edit Profile</span>
                                     }
                                 </div>

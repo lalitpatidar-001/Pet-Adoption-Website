@@ -2,7 +2,8 @@ const { updateLike, isPostLike } = require('../controllers/like');
 const { getAllPost, getFilteredPost, createPost, getPostsByUserId, getPostById, deletePost, updateSavedPost } = require('../controllers/post');
 const { getUser } = require('../controllers/user');
 const {  uploadPost } = require('../utils/multer');
-const { postValidationRules, handlePostValidationResult } = require('../validators/post');
+const handlePostValidationResult = require('../validation/handleValidationResult');
+const { postValidationRules } = require('../validation/rules/postValidationRules');
 
 const router = require('express').Router();
 

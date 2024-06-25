@@ -1,21 +1,34 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
 import logo from '../assets/pet-logo.png' ;
+import HomeIcon from '@mui/icons-material/Home';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import CreatePost from './CreatePost';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import CreatePost from './CreatePost';
 import { userContext } from '../context/UserContextProvider';
+import axiosInstance from '../axios';
+import {toast} from "react-hot-toast"
 
 function SideBar({isCreateOpened ,setIsCreateOpened , page}) {
     const navitgate = useNavigate();
     const {User,setUser} = useContext(userContext);
 
-    const handleLogout = ()=>{
-        localStorage.removeItem("user-data");
-        setUser(false);
-        navitgate("/login");
+    const handleLogout = async()=>{
+        try{
+            const response = await axiosInstance.get("/auth/logout");
+            console.log(response);
+            if(response.status===200) {
+                localStorage.removeItem("user-data");
+                setUser(null);
+                toast.success("Logged Out Successfully")
+                navitgate("/login");
+            }
+        }catch(error){
+            console.log(error);
+            toast.error("can not logout, try again")
+        }
+        
     }
 
     return (

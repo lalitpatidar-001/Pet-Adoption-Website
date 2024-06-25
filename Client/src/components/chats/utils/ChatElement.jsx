@@ -11,7 +11,7 @@ const ChatElement = ({ participants, chat, _id }) => {
 
     const { User } = useContext(userContext);
     const getOpponentUser = (members) => {
-        const oppenentUserData = members?.filter((member) => User !== member._id);
+        const oppenentUserData = members?.filter((member) => User !== member?._id);
         return oppenentUserData
     }
 
@@ -26,7 +26,7 @@ const ChatElement = ({ participants, chat, _id }) => {
     }
 
     return (
-        <div className={`${currentChat._id === _id ? " bg-gray-500 text-white" : "bg-white"} cursor-pointer flex items-center justify-between py-2`} onClick={handleClickOnChat}>
+        <div className={`${currentChat?._id === _id ? " bg-gray-500 text-white" : "bg-white"} cursor-pointer flex items-center justify-between py-2`} onClick={handleClickOnChat}>
             <div className='flex gap-2'>
                 <Avatar profileImage={oppenentUser?.profileImage} />
                 <div className='flex flex-col'>

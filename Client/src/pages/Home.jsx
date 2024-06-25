@@ -9,12 +9,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addAllPets } from '../redux/slices/petSlice'
 import { connectSocket, socket } from '../socket'
 import { userContext } from '../context/UserContextProvider'
+import axiosInstance from '../axios'
 
 function Home() {
   const [isCreateOpened, setIsCreateOpened] = useState(false);
   const { User } = useContext(userContext);
   const dispatch = useDispatch();
 
+ 
   const [isPostLoading, setIsPostLoading] = useState(false);
 
   useEffect(() => {

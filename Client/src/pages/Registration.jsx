@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, json, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import axiosInstance from '../axios';
-
+import {toast} from "react-hot-toast"
 function Registration() {
     const navigate = useNavigate();
 
@@ -31,14 +31,18 @@ function Registration() {
             setIsLoading(false);
             console.log(response.data);
             if (response.status === 201) {
-                window.alert("User Registered Successfully");
+                toast.success("User Registered Successfully");
                 navigate("/login");
             }
 
         }
         catch (error) {
             setIsLoading(false);
-            console.log(error);
+            if (error.response && error.response.data.msg ) {
+                toast.error(error.response.data.msg)
+            } else {
+                 toast.error("Something went wrong");
+            }
         }
     }
 

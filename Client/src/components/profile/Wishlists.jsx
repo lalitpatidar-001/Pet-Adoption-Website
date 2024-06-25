@@ -13,7 +13,7 @@ const Wishlists = () => {
   useEffect(()=>{
     async function getWishlist (){
       try{
-        const response = await axiosInstancei.get(`/user/wishlists/${User}`)
+        const response = await axiosInstance.get(`/user/wishlists/${User}`)
         console.log(response)
         console.log(response.data.data);
         dispatch(addAllWishlists({data:response.data.data}))

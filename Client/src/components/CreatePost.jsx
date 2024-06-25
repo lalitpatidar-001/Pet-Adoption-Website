@@ -4,7 +4,7 @@ import axios from 'axios';
 import { userContext } from '../context/UserContextProvider';
 import { useDispatch } from "react-redux";
 import { updatePets } from '../redux/slices/petSlice';
-import axiosInstance from '../axios';
+import axiosInstance, { urlPath } from '../axios';
 
 
 function CreatePost({ isCreateOpened, setIsCreateOpened, setIsPostLoading }) {
@@ -37,9 +37,14 @@ function CreatePost({ isCreateOpened, setIsCreateOpened, setIsPostLoading }) {
     postData.append('isNoFee', isNoFeeChecked);
     console.log(postData);
     try {
-      // Replace 'your-api-endpoint' with your actual API endpoint
       setIsPostLoading(true)
-      const response = await axiosInstance.post(`/post/createpost/${User}`, postData);
+      const response = await axios.post(`${urlPath}/api/post/createpost/${User}`, postData,
+        {
+          headers:{
+            "Content-Type":"multipart/form-data"
+          }
+        }
+      );
 
       // Handle the response, you can log it for now
       console.log('API Response:', response.data.post);

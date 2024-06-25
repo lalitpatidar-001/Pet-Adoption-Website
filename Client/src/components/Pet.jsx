@@ -83,10 +83,10 @@ function Pet({ _id, name, type, breed, age, gender, price, isNoFee, userId, imag
   };
 
   return (
-    <div className='w-full h-[95vh] flex flex-col p-1 shadow-lg bg-white border-1 border-[#bfbdbd]'>
+    <div className='w-full h-[95vh] flex flex-col p-1 shadow-lg bg-white border-1 border-[#bfbdbd] pb-2'>
       <div className='flex p-2 justify-between items-center'>
         <div className='flex gap-2'>
-          <img className='w-[50px] rounded-[50%]' src={profileURL} alt="profile-image" />
+          <img className='w-[50px] h-[50px] overflow-hidden rounded-[50%]' src={profileURL} alt="profile-image" />
           <Link to={`/profile/${userId._id}`}>
             <h1 className=' cursor-pointer hover:text-blue-500 py-2 font-semibold text-xl'>{userId.username}</h1>
           </Link>
